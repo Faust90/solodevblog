@@ -1,0 +1,1 @@
+async function loadContent(t){t=await(await fetch("/posts/"+t)).text();document.getElementById("mainContent").innerHTML=t}
