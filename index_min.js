@@ -1,1 +1,1 @@
-async function loadContent(t){t=await(await fetch("./posts/"+t)).text();document.getElementById("mainContent").innerHTML=t}async function loadLatest(){loadContent("1-3-2026_rust_roguelike_2.html")}
+async function loadContent(t){t=await(await fetch("./posts/"+t)).text();document.getElementById("mainContent").innerHTML=t}async function loadLatest(){loadContent("8-5-2022_introduzione.html")}
