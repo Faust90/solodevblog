@@ -7,20 +7,28 @@
       content="Diario di uno sviluppatore che fa cose nel tempo libero"
     />
     <meta name="author" content="Jacopo 'Faust' Buttiglieri" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 
   <script src="index_min.js"></script>
 
-  <body>
+  <body onload="loadLatest()">
     <header>
+      <h1>Diario di uno sviluppatore indipendente</h1>
       <nav>
-        <a href="#">Home</a>
+        <a href="#" onclick="loadLatest()">Home</a>
         <a href="#">Articoli</a>
-        <a href="#" onclick="loadContent('introduzione.html')">Informazioni</a>
+        <a href="#" onclick="loadContent('8-5-2022_introduzione.html')"
+          >Informazioni</a
+        >
       </nav>
     </header>
+
     <main id="mainContent"></main>
-    <footer></footer>
+
+    <footer>
+      <p>Jacopo "Faust" Buttiglieri. Tutti i diritti riservati.</p>
+    </footer>
   </body>
 </html>
