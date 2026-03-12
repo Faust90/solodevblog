@@ -1,0 +1,388 @@
+<article>
+  <h2>Langobarda Horribilis: in Trebia Post Mortem</h2>
+  <h3>Idee rinate</h3>
+
+  <p>
+    <a href="https://www.langobardiahorribilis.com/" target="_blank"
+      >Langobardia Horribilis</a
+    >
+    è quel progetto che porti avanti da tanto tempo, ha cambiato forma dozzine
+    di volte e non ha ancora trovato una via definitiva. È partito come
+    videogioco in stile Diablo, è diventato Gioco di ruolo, ha cambiato
+    ambientazione due volte. Ed infine, è tornato a essere <i>anche </i>un
+    videogioco.
+    <a href="https://faust90.itch.io/lhit" target="_blank"
+      >Langobardia Horribilis: in Trebia</a
+    >
+    è una lettera d'amore ai giochi survival horror e ai giochi per il vecchio
+    Game Boy Color. Una lettera scritta in Java e bestemmie nell'arco di tre
+    anni
+  </p>
+
+  <h3>Si, ma in pratica?</h3>
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhj6dCEyi4GZezGXMR1wvLoNwdfNXNft2kf6RWyAOQogL5jEKhQ_Qg8Qw7FMAaLlv51cS72Xtt2oeTmcIT3u6Ko7caWFoOK-YogVlrHJ9zCgIAUwTJJp0Vu7sO-DBhuLkvJhTBMj022TC9WD2YFzg9D2qi8uT4GDX2634LdwY0aKKCYQ2bh4MhROUw0/s1000/title_splash_3.png"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="563"
+        data-original-width="1000"
+        height="280"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhj6dCEyi4GZezGXMR1wvLoNwdfNXNft2kf6RWyAOQogL5jEKhQ_Qg8Qw7FMAaLlv51cS72Xtt2oeTmcIT3u6Ko7caWFoOK-YogVlrHJ9zCgIAUwTJJp0Vu7sO-DBhuLkvJhTBMj022TC9WD2YFzg9D2qi8uT4GDX2634LdwY0aKKCYQ2bh4MhROUw0/w497-h380/title_splash_3.png"
+        width="497"
+    /></a>
+    <figcaption>
+      Doveva chiamarsi "in Padus", poi "in Tarum". Alla fine la storia dello
+      scriptorium di San Colombano mi ha fatto propendere per "in Trebia".
+    </figcaption>
+  </figure>
+
+  <p>
+    Un gioco inspirato da
+    <a href="https://new-blood.itch.io/faith-the-unholy-trinity">FAITH</a>, con
+    un po' di Legend of Zelda e di stile roguelite. Lo stile è volutamente
+    retrò: la grafica ha la stessa risoluzione e i limiti di palette e colori
+    dei giochi esclusivi per Game Boy Color. Per chi si vuole documentare
+    meglio, ecco
+    <a
+      href="https://www.nintendo.co.uk/Support/Game-Boy-Pocket-Color/Product-information/Technical-data/Technical-data-619585.html"
+      >delle</a
+    >
+    <a href="https://en.wikipedia.org/wiki/Game_Boy_Color">pagine</a>. C'è un
+    certo grado di approssimazione, ovviamente. Sviluppare su Gameboy Color è
+    possibile anche oggi (vedi
+    <a href="https://www.gbstudio.dev/" target="_blank">GBStudio</a> o le
+    <a
+      href="https://www.retroreversing.com/official-gameboy-software-dev-kit/"
+      target="_blank"
+      >SDK</a
+    >
+    ) ma non era il mio scopo.
+  </p>
+
+  <h3>Game Design mon amour</h3>
+
+  <p>
+    Visto che i precedenti tentativi di sviluppare un gioco con LibGDX si erano
+    mostrati troppo ambiziosi per le mie sole forze, ho deciso di semplificarlo
+    al punto di ottenere un'idea del prodotto del quale vi parlavo nel
+    precedente paragrafo. Mi sono sforzato di non buttarmi subito a scrivere
+    codice a cannone, concentrandomi invece sul documento di design e buttare
+    giù qualche schizzo in matita del gioco.
+  </p>
+
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiePGFhiaI6q0j_KPjLqGN5Ob5kKFFLmbLBvnyqvCgwLmiALVl66ITz_-uoKG80A2nAuTQkEMktNhTf7VGYtyc8RD2ARWVqNM8mEif5MZCUoPbhkCGg_y8L0ltLX1eYxJv95Cmb7CVjCQ-b7C4m9SWRmo6utlL0bUEPHL2NaL0tQ26hoyKpEMyduN60/s2842/gdd.jpg"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="1991"
+        data-original-width="2842"
+        height="448"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiePGFhiaI6q0j_KPjLqGN5Ob5kKFFLmbLBvnyqvCgwLmiALVl66ITz_-uoKG80A2nAuTQkEMktNhTf7VGYtyc8RD2ARWVqNM8mEif5MZCUoPbhkCGg_y8L0ltLX1eYxJv95Cmb7CVjCQ-b7C4m9SWRmo6utlL0bUEPHL2NaL0tQ26hoyKpEMyduN60/w640-h448/gdd.jpg"
+        width="640"
+    /></a>
+    <figcaption>
+      Alcune cose sono state scartate, e alcune di queste riconsiderate dopo.
+    </figcaption>
+  </figure>
+  <p>
+    Il risultato è lontano da un vero e proprio Game Design Document, ma mi è
+    bastato per avere le idee più chiare e una serie di appunti, sì sparsi e
+    disordinati, ma comunque scritti e riguardabili. Sono anche serviti per dare
+    indicazioni a 2dipixel e Gilian Adam, rispettivamente un artista di pixel
+    art e un musicista per videogiochi con cui ho collaborato.
+  </p>
+
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjp4ougeuPmAmC8yCnF2qfS1bPwPKXetT9-7BhmwyyjAoiOSDt7vEp7W94mzlbgSLJG70I_k3FNF9rlg1ShPdTNjiohUh7NdwQDtBf-OH7Jrx45QDZCQ8ucijVdYzZc2t5Ok9-l0cxscJGZEjyB4jpq4zLK7AlJXzoWjC0bM2RwCFsi6JHr_VbZy5ff/s1347/gdd_2.jpg"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="1056"
+        data-original-width="1347"
+        height="454"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjp4ougeuPmAmC8yCnF2qfS1bPwPKXetT9-7BhmwyyjAoiOSDt7vEp7W94mzlbgSLJG70I_k3FNF9rlg1ShPdTNjiohUh7NdwQDtBf-OH7Jrx45QDZCQ8ucijVdYzZc2t5Ok9-l0cxscJGZEjyB4jpq4zLK7AlJXzoWjC0bM2RwCFsi6JHr_VbZy5ff/w580-h454/gdd_2.jpg"
+        width="580"
+    /></a>
+    <figcaption>
+      Schizzi per dare un'idea di base ai collaboratori riguardo ad un
+      determinato nemico. Si ringrazia poi
+      <a href="https://www.instagram.com/2dipixel/" target="_blank">2dipixel </a
+      >e
+      <a href="https://www.arnocyreus.com/" target="_blank">Arnocyreus</a> per
+      averlo reso, rispettivamente, in grafica e musica.
+    </figcaption>
+  </figure>
+
+  <h3>Strumenti del mestiere</h3>
+  <p>
+    Avevo già fatto un
+    <a
+      href="https://faust90.itch.io/lhit/devlog/359511/tools-of-the-trade"
+      target="_blank"
+      >post su itch.io</a
+    >
+    al riguardo. Visto che non voglio dilungarmi troppo, mi limito a dire che ho
+    utilizzato:
+  </p>
+
+  <ul style="text-align: left">
+    <li>
+      <a href="https://www.piskelapp.com/" target="_blank">Piskel</a> per sprite
+      e animazioni.
+    </li>
+    <li>
+      <a href="https://www.jetbrains.com/idea/" target="_blank">Intellij</a>
+      come IDE.
+    </li>
+    <li>
+      <a href="https://libgdx.com/wiki/tools/hiero" target="_blank">Hiero</a>
+      per la conversione del font stile Gameboy ad un BitmapFont compatibile con
+      la libreria.
+    </li>
+    <li>
+      <a href="https://www.mapeditor.org/" target="_blank">Tiled</a> come level
+      editor.
+    </li>
+    <li>
+      <a href="https://www.audacityteam.org/" target="_blank">Audacity</a> and
+      <a href="https://www.lexaloffle.com/pico-8.php" target="_blank">Pico8</a>
+      per il (piccolo) lavoro di sound editing.
+    </li>
+  </ul>
+  <p>Altri dettagli li potete trovare nel post sopra indicato.</p>
+
+  <h3>Le non sistematiche NullPointerException</h3>
+
+  <p>
+    Lo sviluppo è stato un interessante esercizio di Java. Vorrei poter dire di
+    aver flexato le mie skill scrivendo roba figa in reflection con
+    un'architettura OO elegante come gli ingranaggi di un orologio artigianale,
+    ma nella pratica c'era una componente di bestemmie, schiantoni e martellate
+    qua e là che dà un'immagine molto meno romantica del processo.
+  </p>
+  <p>
+    Uno dei problemi che ho trovato era un bug enorme che solo il mio vecchio
+    computer dell'università che montava Ubuntu GNOME ha tirato fuori.
+  </p>
+
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVpmFzPyhAxdzVge5okiEKfgykLGbY_zWjjc_sbkeaRWQxN6-y3iJYpB6qPT-08nFYKp1xJCMtEgZJr3c-LhM0HzlR_-P0LLrliqlfok9672EhbdzkzBeAWzUM52t62V1INuldPBY2Kx6CF1_AX4po1xSKk7ibxSCrlb5VngY0sJTG4GWBqkN2KBWi/s576/nulpoint.PNG"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="576"
+        data-original-width="573"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVpmFzPyhAxdzVge5okiEKfgykLGbY_zWjjc_sbkeaRWQxN6-y3iJYpB6qPT-08nFYKp1xJCMtEgZJr3c-LhM0HzlR_-P0LLrliqlfok9672EhbdzkzBeAWzUM52t62V1INuldPBY2Kx6CF1_AX4po1xSKk7ibxSCrlb5VngY0sJTG4GWBqkN2KBWi/s16000/nulpoint.PNG"
+    /></a>
+
+    <figcaption>
+      In rosso il punto incriminato. In blu lo shape che NON dovevo usare, in
+      verde quello che avrei dovuto usare.
+    </figcaption>
+  </figure>
+
+  <p>
+    Nel codice un punto andava in NullPointerException. O meglio, avrebbe dovuto
+    tirare la suddetta eccezione in modo sistematico. Ma mentre il mio gaming pc
+    Windows 10 del 2016 questo non accadeva senza spiegazione, il vegliardo con
+    Linux era molto meno tollerante.
+  </p>
+
+  <h3>Le mitiche coordinate float</h3>
+  <p>
+    Se avete già letto
+    <a
+      href="https://diariosolodev.blogspot.com/2022/08/lets-program-doom-di-3dsage-ma-in.html"
+      >questo</a
+    >
+    post, sapete già di cosa sto parlando. Per gli altri, vi basti sapere che
+    LibGDX utilizza un sistema di coordinate float. Questo vuol dire che
+    potrebbero esserci valori non interi, specialmente in un caso in cui la
+    fisica del gioco è simulata da un engine fisico potente come Box2D. Il che
+    causava questo glitch.
+  </p>
+
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiiXtjTq4QbKrrwYz7iolTAS9isPzRl3LbxvaQCDgYViSkCp4zDaYkCoB82NYZ2sz-a4mZgPKSp3yceKtjOn-xQj4BipYnVk5_zHLdtQNdr53tCF8dbUnsnEPIntoPatoXpzRYUlaisQusL4wR57Wf5b1P4SElguns1vmOS-zVrrP6epkeiJc7_R_HK/s480/p_tearing.gif"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="432"
+        data-original-width="480"
+        height="387"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiiXtjTq4QbKrrwYz7iolTAS9isPzRl3LbxvaQCDgYViSkCp4zDaYkCoB82NYZ2sz-a4mZgPKSp3yceKtjOn-xQj4BipYnVk5_zHLdtQNdr53tCF8dbUnsnEPIntoPatoXpzRYUlaisQusL4wR57Wf5b1P4SElguns1vmOS-zVrrP6epkeiJc7_R_HK/w429-h387/p_tearing.gif"
+        width="429"
+    /></a>
+
+    <figcaption>
+      Notare il glitch sulla parte sinistra del mostro: il rendering del pixel
+      viene"approssimato" male per via delle coordinate non intere.
+    </figcaption>
+  </figure>
+
+  <p>
+    Voi direte "ma come, avevi già incontrato questo problema e ci sei ricascato
+    dopo due anni?". Si, è la dimostrazione che l'esperienza serve solo se si
+    presta attenzione.
+  </p>
+  <figure>
+    <a
+      href="https://c.tenor.com/U6a4lsf10jgAAAAd/sotomayor-aldo-giovanni-giacomo.gif"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="640"
+        data-original-width="640"
+        height="453"
+        src="https://c.tenor.com/U6a4lsf10jgAAAAd/sotomayor-aldo-giovanni-giacomo.gif"
+        width="453"
+    /></a>
+
+    <figcaption>Sempre all'erta!</figcaption>
+  </figure>
+
+  <h3>Il bagno di sangue della web build</h3>
+  <p>
+    Partiamo dal presupposto che secondo la mia modesta opinione
+    <a href="https://www.gwtproject.org/overview.html">GWT </a>è magia nera. GWT
+    è un kit di sviluppo che traduce il Java in Javascript. Molti di voi saranno
+    confusi o stupefatti da questa frase, e fidatevi lo ero pure io. Ma perché
+    vi sto parlando di questo maligno strumento che trasforma le mele in arance?
+  </p>
+  <p>
+    LibGDX è una libreria Java che permette, tra le altre cose, di rilasciare
+    giochi su Desktop, Ios, Android e Web. In quest'ultimo caso il gioco sarà
+    giocabile su un qualunque browser. Per realizzare ciò, la libreria utilizza
+    GWT per tradurre il codice Java in Javascript. Facile, no? Basta lanciare un
+    comando di build e fa tutto lui. E invece no.
+  </p>
+  <figure>
+    <a
+      href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9gyBSiNmaMqeQIZLjTm5S0O_uMsOtzn0dcKuXXtV1quN7P78aS9_sHwLR0rFyVKyaEs-SW8FvHnxWQAbp--VeOp8sjCda8qw94O-I63hDkaT3lR-TlWPsu3eiAl-ieU2DDa_2HH-RyoNe-n9fT4squmdjN_CvZaYjRaCvnr18-PauJ_PH7QtAzW1Z/s1210/gwt.png"
+      style="margin-left: 1em; margin-right: 1em"
+      ><img
+        border="0"
+        data-original-height="486"
+        data-original-width="1210"
+        height="258"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9gyBSiNmaMqeQIZLjTm5S0O_uMsOtzn0dcKuXXtV1quN7P78aS9_sHwLR0rFyVKyaEs-SW8FvHnxWQAbp--VeOp8sjCda8qw94O-I63hDkaT3lR-TlWPsu3eiAl-ieU2DDa_2HH-RyoNe-n9fT4squmdjN_CvZaYjRaCvnr18-PauJ_PH7QtAzW1Z/w640-h358/gwt.png"
+        width="640"
+    /></a>
+
+    <figcaption>
+      Non sembra male, finché non devi capire classe per classe cosa inserire.
+    </figcaption>
+  </figure>
+
+  <p>
+    Bisogna tenere a mente una serie di cose: vanno innazitutto censite tutte le
+    librerie esterne su un apposito <b>file *.gwt.xml.</b> Qualora poi nel
+    codice venisse usata la reflection, non può essere usata nel modo
+    "classico", ma
+    <b>bisogna usare una classe di utility fornita ClassReflection da LibGDX </b
+    >(<i>ClassReflection</i>), e censire sempre sul suddetto file le classi che
+    la utilizzano. Questo non vuol dire che una volta finito questo censimento
+    la build web fili liscia. Ci sono alcuni problemi che hanno richiesto
+    soluzioni bizzarre, come ad esempio
+    <b
+      >copiare una classe della libreria e relativi package nel progetto, e
+      referenziarla nel suddetto file. </b
+    >Soluzione tampone trovata sul mai abbastanza glorificato StackOverflow.
+  </p>
+
+  <h3>Il misterioso caso della velocità del motore fisico</h3>
+  <p>
+    Nei paragrafi precedenti ho menzionato Box2D. In soldoni, è un engine per
+    avere una simulazione fisica bidimensionale, e gestisce anche le collisioni.
+    È molto potente e ha semplificato di molto il lavoro sulla gestione delle
+    interazioni tra entità di gioco. Però, misteriosamente, sulla build web di
+    Box2D sembra più veloce della versione desktop, risultando in movimenti più
+    ampi e veloci. Come soluzione tampone ho <b>moltiplicato per 0.75 </b>tutti
+    i valori che definivano la frequenza di update del motore fisico. Perché
+    proprio 0.75? Questo numero è letteralmente tirato fuori io dal cilindro
+    andando a tentoni. Ho risolto il problema definitivamente, secondo voi?
+  </p>
+
+  <p>
+    No, ovviamente. A pochi giorni prima del rilascio finale, ecco che
+    misteriosamente tutto va più lento. O meglio,
+    <b>torna ad andare alla giusta velocità</b>, quindi per il fatto che io
+    avevo rallentato artificiosamente la fisica era a sua volta più lenta. Il
+    motivo? Dopo aver chiesto aiuto alla community Discord di LibGDX, ho dedotto
+    che il bug era probabilmente dovuto al fatto che
+    <b>la velocità di sync dello schermo</b> e la
+    <b>temporizzazione dello "step" </b>che doveva fare il motore fisico
+    <b>non erano allineate. </b>Grazie ad un utente della community Discord di
+    Libgdx ho avuto modo di leggere un articolo su Box2D e capire dove ero stato
+    piuttosto ingenuo.
+  </p>
+
+  <p>
+    Ovviamente l'argomento è abbastanza ampio, infatti c'è da leggere tutto
+    <a href="https://gafferongames.com/post/fix_your_timestep/" target="_blank"
+      >questo </a
+    >articolo. Ma per farla breve, possiamo dire che
+    <b>fare le cose senza capire capire cosa si sta facendo è una cazzata.</b>
+  </p>
+
+  <h3>Tirando le somme...</h3>
+
+  <figure>
+    <iframe
+      allowfullscreen=""
+      class="BLOG_video_class"
+      height="266"
+      src="https://www.youtube.com/embed/jR73eBrfYPY"
+      width="320"
+      youtube-src-id="jR73eBrfYPY"
+    ></iframe>
+
+    <figcaption>
+      Va che lusso, dopo tutto sto mattone di post abbiamo pure un trailer.
+    </figcaption>
+  </figure>
+
+  <p>
+    Lo sviluppo di <i>Langobardia Horribilis: in Trebia </i>è stato lungo e
+    comunque una bellissima esperienza. Aver costruito il tutto da 0 in Java è
+    stato per me molto motivante, e se avessi lavorato con un engine come Godot
+    o Unity probabilmente non l'avrei mai portato a termine. Questo mi ha fatto
+    capire che
+    <b
+      >bisogna sempre mettersi in ondizione di avere motivazione al massimo
+      possibile. </b
+    >Questo è valido ovviamente per tutti i lavori, e la programmazione non fa
+    differenza. Dato che non avevo veri vincoli, mi sono concesso questa
+    "complicazione" che in realtà è stata vero e proprio combustibile per
+    portare avanti il lavoro.
+  </p>
+
+  <p>
+    Il lavoro di progettazione, sia tecnica che artistica,
+    <b>è stato fondamentale </b>per ridurre i problemi, e tuttavia penso che mi
+    sarei potuto permettere di prendere <b>ancora più tempo</b>.
+  </p>
+  <p>
+    Inoltre ho capito di aver fatto <b>troppa poca promozione</b>. Avrei dovuto
+    iniziare fin dalle primissime fasi di sviluppo a diffondere screenshot e
+    post social a riguardo. Fondamentalmente fare community. Questo ovviamente
+    porta via molto (troppo) tempo, e nell'ultimo periodo non era fattibile.
+    Prossimamente, complici forse tempi più tranquilli, dovrei riuscire a
+    dedicarci del tempo.
+  </p>
+  <p>
+    Questi sono i punti che mi son portato a casa. E con questa ultima frase,
+    possiamo anche chiudere questo lungo articolo, non prima però di avervi dato
+    il link al
+    <a href="https://github.com/FireBellyToad/LHIT" target="_blank"
+      >repository del gioco</a
+    >.
+  </p>
+</article>
