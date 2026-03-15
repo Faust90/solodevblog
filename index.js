@@ -5,8 +5,8 @@
  * 
  * @param {*} pageFile 
  */
-async function loadContent(pageFile) {
-    const page = await fetch(`./posts/${pageFile}`);
+async function loadContent(pageFile, isPost = true) {
+    const page = await fetch(isPost ? `./posts/${pageFile}` : `./${pageFile}`);
     const pageText = await page.text();
     document.getElementById('mainContent').innerHTML = pageText;
 }

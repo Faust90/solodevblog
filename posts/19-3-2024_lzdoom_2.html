@@ -1,0 +1,158 @@
+<article>
+  <h5>19/03/2024</h5>
+  <h2>Sviluppo su ZDoom parte 2: perché il design ci fa schifo</h2>
+  <p>
+    Non perdiamo tempo: dopo quanto detto
+    <a href="#" onclick="loadContent('12-3-2024_lzdoom.html')" target="_blank"
+      >nella prima parte </a
+    >, vado subito ad elencare i progressi su LZDoom.
+  </p>
+  <section>
+    <h3>Addio a LZDoom</h3>
+    <p>
+      Tanto per cominciare, ho scoperto che <b>LZDoom non avrà più udpate</b>.
+      Questo vuol dire che se voglio essere sicuro di supportare le ultime
+      versioni di questo engine dovrò necessariamente passare a <b>GZDoom</b>,
+      che, per far breve, è una variante più aggiornata e con funzionalità
+      aggiuntive. Tutta roba che in realtà ora non mi serve.
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_1.png" />
+      <figcaption>È stato bello.</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Nuove texture</h3>
+    <p>
+      Ho iniziato a cambiare le texture stock del WAD originale con delle nuove
+      texture disponibili senza diritto d'autore. L'idea era creare una specie
+      di struttura sotterranea di cemento armato in rovina. Il cielo rosso è
+      un'aggiunta temporanea solo per impratichirmi con la pseudo Skybox che
+      ZDoom implementa.
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_2.JPG" />
+      <figcaption>Prima del trattamento ...</figcaption>
+    </figure>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_3.JPG" />
+      <figcaption>... e dopo</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Polyobjects</h3>
+    <p>
+      Come avevo già scritto, la <i>id Engine 1</i> non ragiona in poligoni, ma
+      in <i>Settori.</i>In particolar modo, il rendering inizialmente
+      <b>non supportava oggetti che si muovevano orizzontalmente</b> per una
+      questione di ottimizzazione e performance dell'algoritmo di ripartizione
+      binaria dello spazio (tutta roba supertecnica che vi invito a cercare
+      altrove).
+    </p>
+
+    <p>
+      La corsa agli armamenti delle schede grafiche negli anni successivi aveva
+      ovviato a questa cosa, ma Doom ancora non aveva questa funzionalità.
+      Tuttavia
+      <a href="https://doomwiki.org/wiki/Hexen" target="_blank">Hexen</a>, un
+      gioco successivo a Doom che però usava lo stesso engine, ha così
+      introdotto i
+      <a href="https://doomwiki.org/wiki/Polyobject" target="_blank"
+        >Polyobject</a
+      >
+      , ovvero
+      <b
+        >gruppi di <i>Linedef</i> che permettono di renderizzare delle geometrie
+        dinamiche </b
+      >che devono tuttavia rispettare diversi limiti.
+    </p>
+
+    <p>
+      Grazie ai Polyobject ho potuto fare in modo che le porte di metallo<b>
+        scorressero lateralmen</b
+      >te, come se scorressero lungo un binario sul pavimento. Per fare questo,
+      però ho dovuto anche usare...
+    </p>
+  </section>
+  <section>
+    <h3>ACS, ovvero l'altro linguaggio di scripting</h3>
+    <p>
+      Un'altra cosa che ho dovuto imparare è <i>ACS</i>, il linguaggio di
+      scripting C-like che controlla gli eventi nelle stanze. Avete capito bene:
+      LZDoom ha <b>due linguaggi di scripting C-like </b>che però sono
+      indipendenti tra loro. Hanno alcuni punti in comune, ma per il resto sono
+      totalmente paralleli. Not cool.
+    </p>
+  </section>
+  <section>
+    <h3>Il design i fa schifo (ma lo dobbiamo fare)</h3>
+    <p>
+      A questo punto mi son reso conto che <b>stavo girando a vuoto. </b>Stavo
+      facendo, in un certo senso, palestra con le features di ZDoom, ma<b>
+        non stavo creando nulla </b
+      >di simile ad un gioco. Ho deciso quindi di prendere carta e penna per
+      fare un minimo di level design.
+    </p>
+
+    <p>
+      Ho in mente una struttura a 4 livelli, di cui il primo serve come
+      introduzione e tutorial. Questo è il livello che ho iniziato a progettare
+      su questo bellissimo foglio a quadretti:
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_4.JPG" />
+    </figure>
+
+    <p>
+      Successivamente, ho creato una nuova mappa lavorando su quello che avevo
+      progettato. Volendo, grazie alla griglia offerta da
+      <b>Ultimate Doom Builder, </b>avrei anche potuto fare qualcosa molto più
+      preciso e su scala, ma per ora ho preferito essere più spannometrico.
+      Questo il risultato:
+    </p>
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_5.png" />
+    </figure>
+  </section>
+  <section>
+    <h3>Il nuovo mostro</h3>
+
+    <p>
+      Un'altra modifica importante riguarda gli sprite del mostro che ti
+      insegue. Il cagnolone mutante ha lasciato il posto a questo tizio mezzo
+      sciolto che ha anche suoni diversi, più "demoniaci".
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        src="./posts/imgs/12-3-2024_lzdoom_2_6.png"
+        height="240"
+        width="110"
+      />
+      <figcaption>va che bell'ometto</figcaption>
+    </figure>
+
+    <p>
+      Non mi piace ancora completamente, vorrei renderlo più inquietante. Credo
+      che dovrò fare del design (OMG NO) pure su di lui.
+    </p>
+  </section>
+  <section>
+    <h3>Si, ma in conclusione?</h3>
+    <p>Ecco qui un video del gioco con il nuovo livello.</p>
+
+    <a href="https://youtu.be/iS4sKTl2tiE" target="_blank">
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2_7.png"
+    /></a>
+
+    <p>
+      Continuate a seguire questi post se vi interessa sapere come si evolverà
+      questo progettino.
+    </p>
+  </section>
+</article>
