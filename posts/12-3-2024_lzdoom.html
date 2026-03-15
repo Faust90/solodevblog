@@ -1,256 +1,269 @@
 <article>
   <h5>12/03/2024</h5>
   <h2>Sviluppo su LZDoom, ovvero di come imparare ad amare le engine altrui</h2>
-  <h3>Cos'è LZDoom?</h3>
-  <p>
-    <b>LZDoom </b>è un source port della <b>id Tech 1</b>, ovvero l'engine di
-    Doom del 1993.
-  </p>
-  <figure>
-    <img
-      loading="lazy"
-      src="https://upload.wikimedia.org/wikipedia/commons/d/da/Doom_source_ports_w_UZDoom.svg"
-    />
+  <section>
+    <h3>Cos'è LZDoom?</h3>
+    <p>
+      <b>LZDoom </b>è un source port della <b>id Tech 1</b>, ovvero l'engine di
+      Doom del 1993.
+    </p>
+    <figure>
+      <img
+        loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/commons/d/da/Doom_source_ports_w_UZDoom.svg"
+      />
 
-    <figcaption>
-      Se volete farvi una cultura sui port di Doom, cliccate
-      <a href="https://en.wikipedia.org/wiki/List_of_Doom_ports" target="_blank"
-        >qua
-      </a>
-    </figcaption>
-  </figure>
-  <p>
-    Questo particolare port è focalizzato sul dare funzionalità di modding molto
-    avanzate, in modo da poter letteralmente stravolgere il gameplay di Doom e
-    personalizzarlo fino al più piccolo particolare.
-  </p>
+      <figcaption>
+        Se volete farvi una cultura sui port di Doom, cliccate
+        <a
+          href="https://en.wikipedia.org/wiki/List_of_Doom_ports"
+          target="_blank"
+          >qua
+        </a>
+      </figcaption>
+    </figure>
+    <p>
+      Questo particolare port è focalizzato sul dare funzionalità di modding
+      molto avanzate, in modo da poter letteralmente stravolgere il gameplay di
+      Doom e personalizzarlo fino al più piccolo particolare.
+    </p>
 
-  <p>
-    Con dei semplici accorgimenti, è possibile avere una base di sviluppo per
-    creare uno sparatutto in prima persona vecchia scuola. Certo, poi devi
-    progettarlo e svilupparlo per davvero. E soprattutto bisogna avere ben
-    chiaro come funziona Doom dietro le quinte.
-  </p>
+    <p>
+      Con dei semplici accorgimenti, è possibile avere una base di sviluppo per
+      creare uno sparatutto in prima persona vecchia scuola. Certo, poi devi
+      progettarlo e svilupparlo per davvero. E soprattutto bisogna avere ben
+      chiaro come funziona Doom dietro le quinte.
+    </p>
 
-  <figure>
-    <img
-      loading="lazy"
-      alt=""
-      data-original-height="1233"
-      data-original-width="1000"
-      height="374"
-      src="./posts/imgs/12-3-2024_lzdoom_1.jpg"
-      width="304"
-    />
-    <figcaption>
-      Potete trovare questo
+    <figure>
+      <img
+        loading="lazy"
+        alt=""
+        data-original-height="1233"
+        data-original-width="1000"
+        height="374"
+        src="./posts/imgs/12-3-2024_lzdoom_1.jpg"
+        width="304"
+      />
+      <figcaption>
+        Potete trovare questo
+        <a
+          href="https://www.amazon.it/Game-Engine-Black-Book-DOOM/dp/B0BMSP3GSS"
+          target="_blank"
+          >meraviglioso librone qui</a
+        >
+        .La id Tech 1 non avrà più segreti.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h3>Si, ma cosa vuoi farci?</h3>
+    <p>
+      Nella pratica, io volevo iniziare ad approcciare LZDoom per capirne i
+      funzionamenti interni nell'ottica di un grosso progetto che mi piacerebbe
+      sviluppare.
+    </p>
+
+    <p>
+      Come prima cosa, però, volevo fare un giochino molto semplice per iniziare
+      a impratichirmi con tutto l'ecosistema di software, scripting e tool vari
+      che ci girano intorno. Roba molto commentata e molto basilare in modo da
+      avere un bel caso studio e progetto documentato e commentato
+    </p>
+
+    <p>
+      In pratica si gioca in prima persona un tizio che è stato rapito da un
+      culto di satanisti e chiuso nei sotterranei dell'edificio che fa da
+      quartier generale dei fanatici. Dovrà scappare dalla struttura, mentre un
+      demone appena uscito dall'inferno lo inseguirà. Insomma, qualcosa sulla
+      falsariga di
+      <b
+        ><a href="https://en.wikipedia.org/wiki/3D_Monster_Maze" target="_blank"
+          >3d Monster Maze
+        </a></b
+      >
+      ma sviluppato in LZDoom.
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2.jpg" />
+
+      <figcaption>Resident Evil spostati proprio</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h3>WAD, pk3, ZScript e altri nomignoli</h3>
+    <p>
+      D'ora in poi darò per scontato che conosciate un minimo il motore
+      originale del gioco, il suo funzionamento. Non ho voglia di spiegarvi le
+      basi del funzionamento della <b>id Tech 1</b>, che sono comunque
+      facilmente reperibili online. Pe farla molto breve, LZDoom utilizza un
+    </p>
+
+    <ul style="text-align: left">
+      <li>
+        <b>WAD: </b>file di archivio<b> </b>specifico della
+        <b>id Tech 1.</b> Veniva usato per contenere tutti gli asset e i livelli
+        del gioco, rispettando una suddivisione ben precisa tra i byte dei dati
+        in esso contenuti (<b>lump</b>). Noi lo useremo solo per le mappe.
+      </li>
+      <li>
+        <b>.pk3: </b>file di archivio che se non sbaglio è usato in
+        <b>Quake, </b>che la cui engine è la <b>id Tech 2. </b>È semplicemente
+        un archivio .zip ma con estensione diversa. Questo tipo di file è
+        supportato da LZDoom e sarà quello che utilizzerò io.
+      </li>
+      <li>
+        <b>ZScript: </b>un linguaggio simile al C++ che è usato da ZDoom per
+        descrivere e gestire tutti gli aspetti e gli elementi del gioco.
+        Sfruttando l' ereditarietà e le callback messe a disposizione dall'
+        engine è possibile creare mod altamente personalizzate di Doom, o
+        addirittura creare nuovo classi da zero. Ne parlerò più
+        approfonditamente nei prossimi post relativi a ZDoom, dove probabilmente
+        parlerò di<a
+          href="https://github.com/jekyllgrim/ZScript_Basics/tree/master"
+          target="_blank"
+        >
+          questa guida,</a
+        >
+        che sembra molto sugosa.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>file ".lmp" e di come amare i censimenti</h3>
+    <p>
+      I file .lmp servono a censire ogni entità, asset o setting di un
+      particolare archivio. Ricoprono la funzione dei <b>lump, </b>citati nel
+      paragrafo precedente come suddivisione interna delle WAD.
+    </p>
+
+    <p>
+      Questi file mi avevano causato alcuni grattacapi inizialmente, ma una
+      volta che ho capito la loro funzionalità, mi sono accorto che non sono
+      nulla di trascendentale.
+    </p>
+
+    <p>
+      Nella mia testa Java-Spring-centrica sono diventati molto simili ai file
+      <i>xml </i>dove vengono censiti i bean.
+    </p>
+    <h3>Nomenclature Sprite meccanizzate</h3>
+
+    <p>
+      Gli Sprite delle entità devono avere una nomenclatura ben precisa, che ha
+      questo formato:
+    </p>
+
+    <code><b>XXXXFA</b></code>
+
+    <p>
+      Dove <i>XXXX </i>è un nome a piacere, F indica il frame d'animazione
+      (l'engine supporta un numero di frame massimo pari a 29: tutte le lettere
+      dell' alfabeto e i simboli <b><i>[</i></b> , <i><b>^</b></i> e<b>
+        <i>] </i></b
+      >). Il dato<i> A</i> invece va da <b>1</b> a <b>8</b> e indica una delle
+      otto direzioni in cui lo Sprite è rivolto. LZDoom supporta 16 direzioni,
+      mappate con il numero <b>9</b> e le lettere <b>A</b> e <b>G</b>.
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_3.png" />
+      <figcaption>
+        16 Sprite nomenclati con il metodo sopraindicato. Notare che non avendo
+        più di un frame, la lettera dopo il nome "SKUL" è sempre "A"
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_4.gif" />
+      <figcaption>Qui il risultato durante il gioco</figcaption>
+    </figure>
+
+    <p>
+      Se invece il valore di questo dato è <b>0</b>, la stessa immagine sarà
+      mostrata indipendentemente dall'angolo in cui è mostrata l'entità. In ogni
+      caso, ogni Sprite deve avere dei metadati che permettono all'engine di
+      posizionarlo correttamente. Questo è fatto tramite <b>SLADE</b>, un tool
+      specifico per gestire i file WAD, i lump e il suddetto offeset di ogni
+      sprite.
+    </p>
+    <figure>
+      <img
+        loading="lazy"
+        height="415"
+        src="./posts/imgs/12-3-2024_lzdoom_5.png"
+        width="640"
+      />
+      <figcaption>
+        Se non facessi questa operazione, il cagnolone qui sopra sarebbe
+        renderizzato con coordinate sfalsate rispetto alla posizione reale.
+      </figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>UItimate Doom Builder</h3>
+    <figure>
+      <img
+        loading="lazy"
+        height="451"
+        src="./posts/imgs/12-3-2024_lzdoom_6.jpg"
+        width="838"
+      />
+      <figcaption>Va che bel level editor!</figcaption>
+    </figure>
+    <p>
+      Una delle cose veramente comode di lavorare con i derivati della
+      <b>id Tech 1 </b>è la possibilità di ragionare in termini di "Settori",
+      "Vertici" e "Linedefs". Qualcosa avevo
       <a
-        href="https://www.amazon.it/Game-Engine-Black-Book-DOOM/dp/B0BMSP3GSS"
+        href="https://diariosolodev.blogspot.com/2022/08/lets-program-doom-di-3dsage-ma-in.html"
         target="_blank"
-        >meraviglioso librone qui</a
+        >già accennato qui,</a
       >
-      .La id Tech 1 non avrà più segreti.
-    </figcaption>
-  </figure>
+      quando ho sviluppato un piccolo renderer per livelli basati su questi
+      concetti. Questo è permette un modo di lavorare in un ambiente "3D" molto
+      semplicistico per gli standard odierni. Questo lo rende, però, molto
+      facile da imparare, e grazie alle caratteristiche di LZDoom è anche molto
+      espandibile con feature moderne.
+    </p>
 
-  <h3>Si, ma cosa vuoi farci?</h3>
-  <p>
-    Nella pratica, io volevo iniziare ad approcciare LZDoom per capirne i
-    funzionamenti interni nell'ottica di un grosso progetto che mi piacerebbe
-    sviluppare.
-  </p>
+    <p>
+      Tutto questo è reso possibile grazie a
+      <a href="https://ultimatedoombuilder.github.io/">Ultimate Doom Builder</a>
+      , un potente tool per creare ed editare mappe che usano il formato
+      supportato da Doom e tutti i suoi derivati. Per ora io mi sono limitato a
+      imparare i fondamenti, espandendo il semplice livello template
+      dell'archivio prototipo da cui sono partito a sviluppare. Ho aggiunto un
+      pavimento sopraelevato e una rampa, entrambe feature che non erano
+      supportate da Doom originale, ma lo sono in LZDoom.
+    </p>
+  </section>
+  <section>
+    <h3>Il risultato</h3>
+    <p>
+      Il risultato è questo piccolo prototipo, la cui pagina itch.io è
+      <a href="https://faust90.itch.io/devil-maze" target="_blank">qua</a> . Qui
+      sotto, invece, trovate un video del prototipo in azione.
+    </p>
 
-  <p>
-    Come prima cosa, però, volevo fare un giochino molto semplice per iniziare a
-    impratichirmi con tutto l'ecosistema di software, scripting e tool vari che
-    ci girano intorno. Roba molto commentata e molto basilare in modo da avere
-    un bel caso studio e progetto documentato e commentato
-  </p>
+    <a href="https://youtu.be/BNVy7jqrMg4" target="_blank">
+      <img
+        loading="lazy"
+        height="451"
+        src="./posts/imgs/12-3-2024_lzdoom_7.jpg"
+        width="838"
+    /></a>
 
-  <p>
-    In pratica si gioca in prima persona un tizio che è stato rapito da un culto
-    di satanisti e chiuso nei sotterranei dell'edificio che fa da quartier
-    generale dei fanatici. Dovrà scappare dalla struttura, mentre un demone
-    appena uscito dall'inferno lo inseguirà. Insomma, qualcosa sulla falsariga
-    di
-    <b
-      ><a href="https://en.wikipedia.org/wiki/3D_Monster_Maze" target="_blank"
-        >3d Monster Maze
-      </a></b
-    >
-    ma sviluppato in LZDoom.
-  </p>
-
-  <figure>
-    <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_2.jpg" />
-
-    <figcaption>Resident Evil spostati proprio</figcaption>
-  </figure>
-
-  <h3>WAD, pk3, ZScript e altri nomignoli</h3>
-  <p>
-    D'ora in poi darò per scontato che conosciate un minimo il motore originale
-    del gioco, il suo funzionamento. Non ho voglia di spiegarvi le basi del
-    funzionamento della <b>id Tech 1</b>, che sono comunque facilmente
-    reperibili online. Pe farla molto breve, LZDoom utilizza un
-  </p>
-
-  <ul style="text-align: left">
-    <li>
-      <b>WAD: </b>file di archivio<b> </b>specifico della
-      <b>id Tech 1.</b> Veniva usato per contenere tutti gli asset e i livelli
-      del gioco, rispettando una suddivisione ben precisa tra i byte dei dati in
-      esso contenuti (<b>lump</b>). Noi lo useremo solo per le mappe.
-    </li>
-    <li>
-      <b>.pk3: </b>file di archivio che se non sbaglio è usato in
-      <b>Quake, </b>che la cui engine è la <b>id Tech 2. </b>È semplicemente un
-      archivio .zip ma con estensione diversa. Questo tipo di file è supportato
-      da LZDoom e sarà quello che utilizzerò io.
-    </li>
-    <li>
-      <b>ZScript: </b>un linguaggio simile al C++ che è usato da ZDoom per
-      descrivere e gestire tutti gli aspetti e gli elementi del gioco.
-      Sfruttando l' ereditarietà e le callback messe a disposizione dall' engine
-      è possibile creare mod altamente personalizzate di Doom, o addirittura
-      creare nuovo classi da zero. Ne parlerò più approfonditamente nei prossimi
-      post relativi a ZDoom, dove probabilmente parlerò di<a
-        href="https://github.com/jekyllgrim/ZScript_Basics/tree/master"
-        target="_blank"
-      >
-        questa guida,</a
-      >
-      che sembra molto sugosa.
-    </li>
-  </ul>
-
-  <h3>file ".lmp" e di come amare i censimenti</h3>
-  <p>
-    I file .lmp servono a censire ogni entità, asset o setting di un particolare
-    archivio. Ricoprono la funzione dei <b>lump, </b>citati nel paragrafo
-    precedente come suddivisione interna delle WAD.
-  </p>
-
-  <p>
-    Questi file mi avevano causato alcuni grattacapi inizialmente, ma una volta
-    che ho capito la loro funzionalità, mi sono accorto che non sono nulla di
-    trascendentale.
-  </p>
-
-  <p>
-    Nella mia testa Java-Spring-centrica sono diventati molto simili ai file
-    <i>xml </i>dove vengono censiti i bean.
-  </p>
-  <h3>Nomenclature Sprite meccanizzate</h3>
-
-  <p>
-    Gli Sprite delle entità devono avere una nomenclatura ben precisa, che ha
-    questo formato:
-  </p>
-
-  <code><b>XXXXFA</b></code>
-
-  <p>
-    Dove <i>XXXX </i>è un nome a piacere, F indica il frame d'animazione
-    (l'engine supporta un numero di frame massimi pari a 29: tutte le lettere
-    dell' alfabeto e i simboli <b><i>[</i></b> , <i><b>^</b></i> e<b>
-      <i>] </i></b
-    >). Il dato<i> A</i> invece va da <b>1</b> a <b>8</b> e indica una delle
-    otto direzioni in cui lo Sprite è rivolto. LZDoom supporta 16 direzioni,
-    mappate con il numero <b>9</b> e le lettere <b>A</b> e <b>G</b>.
-  </p>
-
-  <figure>
-    <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_3.png" />
-    <figcaption>
-      16 Sprite nomenclati con il metodo sopraindicato. Notare che non avendo
-      più di un frame, la lettera dopo il nome "SKUL" è sempre "A"
-    </figcaption>
-  </figure>
-
-  <figure>
-    <img loading="lazy" src="./posts/imgs/12-3-2024_lzdoom_4.gif" />
-    <figcaption>Qui il risultato durante il gioco</figcaption>
-  </figure>
-
-  <p>
-    Se invece il valore di questo dato è <b>0</b>, la stessa immagine sarà
-    mostrata indipendentemente dall'angolo in cui è mostrata l'entità. In ogni
-    caso, ogni Sprite deve avere dei metadati che permettono all'engine di
-    posizionarlo correttamente. Questo è fatto tramite <b>SLADE</b>, un tool
-    specifico per gestire i file WAD, i lump e il suddetto offeset di ogni
-    sprite.
-  </p>
-  <figure>
-    <img
-      loading="lazy"
-      height="415"
-      src="./posts/imgs/12-3-2024_lzdoom_5.png"
-      width="640"
-    />
-    <figcaption>
-      Se non facessi questa operazione, il cagnolone qui sopra sarebbe
-      renderizzato con coordinate sfalsate rispetto alla posizione reale.
-    </figcaption>
-  </figure>
-
-  <h3>UItimate Doom Builder</h3>
-  <figure>
-    <img
-      loading="lazy"
-      height="451"
-      src="./posts/imgs/12-3-2024_lzdoom_6.jpg"
-      width="838"
-    />
-    <figcaption>Va che bel level editor!</figcaption>
-  </figure>
-  <p>
-    Una delle cose veramente comode di lavorare con i derivati della
-    <b>id Tech 1 </b>è la possibilità di ragionare in termini di "Settori",
-    "Vertici" e "Linedefs". Qualcosa avevo
-    <a
-      href="https://diariosolodev.blogspot.com/2022/08/lets-program-doom-di-3dsage-ma-in.html"
-      target="_blank"
-      >già accennato qui,</a
-    >
-    quando ho sviluppato un piccolo renderer per livelli basati su questi
-    concetti. Questo è permette un modo di lavorare in un ambiente "3D" molto
-    semplicistico per gli standard odierni. Questo lo rende, però, molto facile
-    da imparare, e grazie alle caratteristiche di LZDoom è anche molto
-    espandibile con feature moderne.
-  </p>
-
-  <p>
-    Tutto questo è reso possibile grazie a
-    <a href="https://ultimatedoombuilder.github.io/">Ultimate Doom Builder</a> ,
-    un potente tool per creare ed editare mappe che usano il formato supportato
-    da Doom e tutti i suoi derivati. Per ora io mi sono limitato a imparare i
-    fondamenti, espandendo il semplice livello template dell'archivio prototipo
-    da cui sono partito a sviluppare. Ho aggiunto un pavimento sopraelevato e
-    una rampa, entrambe feature che non erano supportate da Doom originale, ma
-    lo sono in LZDoom.
-  </p>
-
-  <h3>Il risultato</h3>
-  <p>
-    Il risultato è questo piccolo prototipo, la cui pagina itch.io è
-    <a href="https://faust90.itch.io/devil-maze" target="_blank">qua</a> . Qui
-    sotto, invece, trovate un video del prototipo in azione.
-  </p>
-
-  <a href="https://youtu.be/BNVy7jqrMg4" target="_blank">
-    <img
-      loading="lazy"
-      height="451"
-      src="./posts/imgs/12-3-2024_lzdoom_7.jpg"
-      width="838"
-  /></a>
-
-  <h3>E il futuro?</h3>
-  <p>
-    Sicuramente dovrò impegnare del tempo per fare un minimo di design del gioco
-    vero e proprio. Nel frattempo continuerò lo stesso a studiare e sperimentare
-    con LZDoom, per capire come realizzare quello che il gioco prevede. Seguite
-    i prossimi post per sapere come andrà a finire.
-  </p>
+    <h3>E il futuro?</h3>
+    <p>
+      Sicuramente dovrò impegnare del tempo per fare un minimo di design del
+      gioco vero e proprio. Nel frattempo continuerò lo stesso a studiare e
+      sperimentare con LZDoom, per capire come realizzare quello che il gioco
+      prevede. Seguite i prossimi post per sapere come andrà a finire.
+    </p>
+  </section>
 </article>
