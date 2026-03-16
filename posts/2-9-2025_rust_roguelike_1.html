@@ -1,0 +1,205 @@
+<article>
+  <h5>02/09/2025</h5>
+  <h2>Roguelike in Rust, Bracket-lib e Macroquad</h2>
+  <p>
+    Se avete letto lo scorso post
+    <a href="https://diariosolodev.blogspot.com/2025/04/polpi-e-rotjs.html"
+      >Polpi e rot.js</a
+    >
+    , sapete che ora ho in testa un'idea per un roguelike. Quindi ho iniziato a
+    rispolverare NetHack e altri giochi del genere per poi sviluppare qualcosa
+    in Javascript in modo da prendere confidenza con il genere. Siccome
+    l'appetito vien mangiando, voglio sfruttare l'occasione per imparare Rust.
+  </p>
+  <p>
+    <b>In breve: </b>sto imparando il linguaggio Rust e la libreria grafica
+    Macroquad per creare un roguelike
+
+    <figure>
+      <img
+        loading="lazy"
+        height="214"
+        src="./posts/imgs/2-9-2025_rust_roguelike_1_1.png"
+        width="320"
+      />
+      <figcaption>La tenera mascotte di Rust</figcaption>
+    </figure>
+  </p>
+
+  <section>
+    <h3>Le ultime modifiche a Octo Chase</h3>
+    <p>
+      Come avevo già menzionato nella
+      <a
+        href="https://diariosolodev.blogspot.com/2025/04/polpi-e-rotjs.html"
+        rel="nofollow"
+        target="_blank"
+        >parte precedente</a
+      >, ho fatto gli ultimi ritocchi ad OctoChase: ho aggiunto il
+      <i>field of view</i> e ho fatto in modo che lo squalo possa inseguire il
+      polpo anche se lo perde di vista, ma lascerà perdere dopo alcuni "tick"
+      del gioco in cui non riesce a vederlo. Questo ha portato anche
+      all'aggiunta di un tasto per fare "attendere" il polpo, così che si possa
+      nascondere e semplicemente aspettare che lo squalo smetta di inseguirlo.
+      Tutto questo sfruttando già le funzionalità offerte dalla libreria.
+    </p>
+    <figure>
+      <img
+        loading="lazy"
+        height="361"
+        src="./posts/imgs/2-9-2025_rust_roguelike_1_2.png"
+        width="432"
+      />
+      <figcaption>
+        Il field of view in azione. Notare la fog of war che grazie a rot.js ti
+        viene fuori gratis
+      </figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Che bello 'sto Rust</h3>
+    <p>
+      Nonostante tutto, non ero completamente soddisfatto. Volevo imparare
+      qualcosa di nuovo e non solo migliorarmi in quello che conoscevo già.
+      Ascoltando il parere di un collega, mi è capitato così di curiosare su
+      <b>Rust.</b>
+    </p>
+    <p>
+      Tutti ne parlavano bene, e aveva quella sintassi C-like, l'attenzione alla
+      gestione della memoria <i>senza</i> garbage collector e il sistema di
+      crate che mi piacevano parecchio. Anche Rust non è, per le sue
+      caratteristiche, il linguaggio più adatto per sviluppare videogiochi, ho
+      deciso di impararlo e usarlo per sviluppare il mio roguelike.
+    </p>
+  </section>
+  <section>
+    <h3>
+      Borrowing, Ownership e di come ho imparato ad
+      <del>odiarli</del> amarli
+    </h3>
+    <p>
+      Come ho anticipato, Rust è un linguaggio che promette (e mantiene) una
+      gestione della memoria molto sicura senza garbage collector e le
+      prestazioni paragonabili a linguaggi come C e C++. Questo lo rende
+      possibile grazie ad una politica <b>borrow / move / ownership </b>che
+      viene controllare durante la compilazione.
+    </p>
+    <p>
+      Questo è un paradigma nuovo e che potrebbe sembrare"strano": in pratica
+      ogni variabile <i>possiede</i> il valore contenuto al suo interno, e viene
+      deallocato non appena non serve più (generalmente quando si esce dallo
+      scope dove è dichiarata).
+    </p>
+    <p>
+      La proprietà di un valore può essere <i>passata</i> ad una funzione,
+      tenendo conto che questo spostamento "consumerà" il valore della variabile
+      con la fine dell'esecuzione della funziona. Se non vogliamo che questo
+      accada, bisogna <i>cederla in prestito </i>utilizzando il passaggio a
+      riferimento ( usando come per C ).
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="104"
+        src="./posts/imgs/2-9-2025_rust_roguelike_1_3.png"
+        width="427"
+      />
+      <figcaption>
+        Questo codice Rust non compila. La stringa di s1 è "mossa" in s2. s1 non
+        possiede più la stringa e quindi non è più valida.
+      </figcaption>
+    </figure>
+    <p>
+      È complicato, sicuramente non l'ho spiegato bene è c'è molto altro da
+      dire. Vi consiglio di leggere questo manuale:
+      <a href="https://doc.rust-lang.org/book/title-page.html"
+        >The Rust Programming Language</a
+      >.
+    </p>
+  </section>
+  <section>
+    <h3>Bracket-lib, ma poi Macroquad (a modo mio)</h3>
+
+    <p>
+      Oltre al manuale citato, ho seguito anche quest'altro tutorial:
+      <a href="https://bfnightly.bracketproductions.com/rustbook/chapter_0.html"
+        >Roguelike Tutorial - In Rust</a
+      >
+      . Per questo, inizialmente, il gioco avrebbe dovuto utilizzare la libreria
+      per giochi roguelike in Rust
+      <a
+        href="https://github.com/amethyst/bracket-lib"
+        rel="nofollow"
+        target="_blank"
+        >bracket-lib</a
+      ><b> (</b>che nel tutorial è citata come <i>rltk</i>). Sebbene quella
+      libreria sia molto completa in termini di funzionalità, ho deciso quasi
+      subito di aver bisogno di più controllo sul codice e libertà sulle
+      implementazioni.
+    </p>
+    <p>
+      Dopo aver valutato diverse engine per videogiochi in Rust, ho deciso di
+      utilizzare
+      <a href="https://macroquad.rs/" rel="nofollow" target="_blank"
+        >Macroquad</a
+      >, una libreria minimale ispirata a raylib e che vuole offrire un set di
+      strumenti per poter realizzare giochi senza molte parti aggiunte. Vista la
+      sua natura open source, ho anche avuto modo di scaricarne il codice e
+      personalizzarlo per raffinare l'input da tastiera in modo da emulare il
+      comportamento che è presente in tutti i roguelike più radizionali.
+      <a
+        href="https://github.com/FireBellyToad/visceraquad"
+        rel="nofollow"
+        target="_blank"
+        >Qui potete vedere </a
+      >la mia personale versione di Macroquad.
+    </p>
+  </section>
+  <section>
+    <h3>ECS</h3>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="207"
+        src="./posts/imgs/2-9-2025_rust_roguelike_1_4.png"
+        width="379"
+      />
+      <figcaption>
+        By Guypeter4 - Own work, CC0,
+        https://commons.wikimedia.org/w/index.php?curid=142522905
+      </figcaption>
+    </figure>
+
+    <p>
+      A differenza di Langobardia Horribilis: in Trebia, qui ho preferito
+      imparare un nuovo design pattern chiamato <b>ECS</b> (Entity, Component
+      System). Per farla molto breve: invece di ragionare tramite Oggetti che
+      hanno un numero <i>predefinito</i> di attributi e uno stato mutabile, qui
+      ci sono delle <b>Entità</b>che possono avere in modo
+      <i>dinamico e flessibile</i> un numero variabile di <b>Componenti</b>.
+      Entità e Componenti interagiscono tra loro tramite <b>Sistemi</b>, che
+      implementano quali comportamenti hanno questi elementi dopo averli
+      raccolti in tuple.
+    </p>
+  </section>
+  <section>
+    <h3>Lo stato dei lavori</h3>
+    <p>
+      Potete provare il prototipo del gioco
+      <a
+        href="https://faust90.itch.io/worlds-viscera"
+        rel="nofollow"
+        target="_blank"
+        >qui</a
+      >, mentre il codice sorgente lo trovate
+      <a
+        href="https://github.com/FireBellyToad/WorldsViscera"
+        rel="nofollow"
+        target="_blank"
+        >qui</a
+      >.
+    </p>
+  </section>
+</article>
