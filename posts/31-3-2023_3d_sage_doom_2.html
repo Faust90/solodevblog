@@ -1,0 +1,161 @@
+<article>
+  <h2>Let's Program Doom di 3DSage, ma in LibGDX: Parte 2</h2>
+  <p>
+    La sera in cui Youtube mi ha notificato la seconda parte di questo tutorial
+    mi ha caricato così tanto che ho fatto fatica ad addormentarmi. Il giorno
+    dopo ero già pronto a convertire (e bestemmiare) il codice C++ del video in
+    Java. Di cosa sto parlando? Dovete innanzitutto sapere che di questo post
+    c'è una
+    <a
+      href="https://diariosolodev.blogspot.com/2022/08/lets-program-doom-di-3dsage-ma-in.html"
+      target="_blank"
+      >parte 1</a
+    >. Non ha senso leggere questo articolo senza prima aver letto quell'altro.
+    Se invece sapete di cosa stiamo parlando, possiamo iniziare.
+  </p>
+  <figure>
+    <a href="https://youtu.be/fRu8kjXvkdY" target="_blank">
+      <img loading="lazy" src="./posts/imgs/31-3-2023_3d_sage_doom_2_1.jpg"
+    /></a>
+
+    <figcaption>Il suo bellissimo micione c'è sempre</figcaption>
+  </figure>
+
+  <section>
+    <h3>Partiamo subito bene</h3>
+    <div>
+      Il progetto di 3Dsage prevede che i file dei livelli e delle texture siano
+      in un formato testuale. Come prima cosa, dunque, ho creato un parser per i
+      file <b>".h" </b>(header in C++) che il progetto usa per definire i
+      livelli e le texture di questo piccolo engine. 3DSage ha fatto anche un
+      mini level editor chiamato <i>Grid2D</i>, che permette di creare livelli
+      da renderizzare (andrò magari a convertire il tutto in un formato Java
+      friendly in un secondo momento). Appena iniziato, scopro che
+      appartenemente il vecchio codice non funzionava più come prima.
+    </div>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="344"
+        src="./posts/imgs/31-3-2023_3d_sage_doom_2_2.jpg"
+        width="839"
+      />
+      <figcaption>Annamo bene...</figcaption>
+    </figure>
+
+    <p>
+      Cominciamo subito alla grande: vengono mostrati muri che dovrebbero essere
+      dietro e altre cose completamente a caso. I problemi principali sono stati
+      due:
+    </p>
+
+    <ul>
+      <li>
+        Non avevo capito bene alcuni limiti di Grid2. Si deve sempre partire dal
+        muro "frontale" e andare in senso antiorario.
+      </li>
+      <li>
+        Il codice di caricamento del file era comunque sbagliato. Il tempo passa
+        e mi dimentico le cose.
+      </li>
+    </ul>
+    <figure>
+      <img
+        loading="lazy"
+        height="495"
+        src="./posts/imgs/31-3-2023_3d_sage_doom_2_3.jpg"
+        width="1234"
+      />
+      <figcaption>Un tantinello meglio</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Le texture</h3>
+    <p>
+      Il caricamento delle texture è stato in realtà più facile anche da
+      convertire in Java, ma disegnare da un array di pixel rgb una texture è
+      stato un piccolo bagno di sangue. Quello che come prima cosa vado a fare è
+      prepararmi un oggetto che contiene una lista di oggetti
+      <b>Color</b> della libreria LibGDX, utilizzando i numeri contenuti in un
+      array per determinare i parametri RGB di ogni pixel. In pratica, ogni
+      <b>Color</b> è un singolo <b>Pixel</b> all'interno di un array che mi
+      tengo in memoria.
+    </p>
+    <p>
+      Nell'idea del tutorial, le texture per i muri vengono disegnati in modo
+      molto semplice. Provo a spiegarla (abbiate pazienza, ma di queste cose
+      sono un dilettante): Prendete un'immagine divisa in pixel. Ogni pixel è un
+      quadrato 1x1. Per disegnarlo in prospettiva, bisogna<b>
+        allargare o stringere</b
+      >
+      l'immagine e conseguentemente i suoi pixel senza però rispettare le
+      proporzioni. C'è da considerare anche che la prospettiva lo deve
+      <b>distorcere</b>.Visto che l'engine di 3D Sage lavora disegnando righe
+      verticali, per ognuna si deve disegnare il pixel corretto nella giusta
+      posizione, in modo da simulare questo effetto. Quindi se ad esempio
+      l'immagine è 16x16 pixel, ma va trasformata in una 32x16, i pixel
+      orizzontali verranno disegnati 2 volte ciascuno.
+    </p>
+    <p>
+      Interessante 'sta roba, eh? No. Comunque capire
+      <b>quale pixel disegnare della texture e in che posizione </b
+      ><b>sullo schermo </b><b>farlo </b>è la base su come funziona il texture
+      mapping dei muri.
+    </p>
+  </section>
+  <section>
+    <h3>I pavimenti del demonio</h3>
+    <p>
+      I pavimenti erano fin da subito una delle cose che mi preoccupavano di
+      più. E avevo ragione. Il video parte sul disegnare una scacchiera per fare
+      un corretto texture mapping. Utilizzando la trigonometria, che per me è
+      sempre stata magia nera. Prendendo paro paro le formule date dal buon
+      3DSage, mi son reso conto un grosso problema: i pavimenti "scivolavano".
+    </p>
+    <figure>
+      <img
+        loading="lazy"
+        height="213"
+        src="./posts/imgs/31-3-2023_3d_sage_doom_2_4.gif"
+        width="320"
+      />
+
+      <figcaption>
+        Trip di acidi con i pavimenti che non si muovono mentre tutto il resto
+        si.
+      </figcaption>
+    </figure>
+    <p>
+      Alla fine sono riuscito a tenere il tutto "fermo", che in realtà vuol dire
+      muoverlo con la stessa velocità con cui si muovevano i muri, Come? Con dei
+      fantastici <b>numeri magici</b>. Cos'è un numero magico? Un valore
+      arbitrario tirato fuori a tentativi e che funziona, appunto, per magia.
+      Maggiori info
+      <a
+        href="https://en.wikipedia.org/wiki/Magic_number_(programming)"
+        target="_blank"
+        >qua </a
+      >. Questo però mi ha permesso di chiudere il tutto e fare texture mapping
+      dei pavimenti. 3DSage non mostra la formula per intero nel suo video, ma
+      non è difficile arrivarci: prendete il <b>modulo </b>della x e la y
+      calcolata per disegnare un certo pixel a schermo e avrete il pixel da
+      disegnare (che dovrebbe essere il texel, o magari mi sbaglio).
+    </p>
+    <figure>
+      <a href="https://youtu.be/pgd1GpvmS2A" target="_blank">
+        <img loading="lazy" src="./posts/imgs/31-3-2023_3d_sage_doom_2_5.jpg"
+      /></a>
+    </figure>
+  </section>
+  <h3>
+    <i>Il risultato finale</i>
+  </h3>
+
+  <p>
+    Cosa rimane fa fare? Usare le classi per le Texture di LibGDX, utilizzare
+    immagini vere come asset invece di preconvertirle a file di testo e
+    possibilmente convertire Grid2D in Java. Tanta roba insomma, ma per ora ci
+    fermiamo a quanto a fatto da 3DSage.
+  </p>
+</article>

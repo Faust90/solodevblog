@@ -1,0 +1,122 @@
+<article>
+  <h5>22/04/2025</h5>
+  <h2>Polpi e rot.js</h2>
+  <p>
+    Ieri ho deciso di darmi ai Roguelike. Per chi non lo sapesse, si vada a
+    leggere la definizione di questa "etichetta"
+    <a href="https://it.wikipedia.org/wiki/Roguelike" target="_blank"
+      >su wikipedia</a
+    >. Non ho voglia di dilungarmi oltre, quindi do per scontato che da questo
+    momento in poi siate tutti a conoscenza del significato di quella parola.
+  </p>
+  <p>
+    <b>In breve:</b> ho usato una libreria per creare un giochino in javascript
+    dove sei un polpo affamato che vuole mangiare un granchio ed evitar uno
+    squalo.
+    <a href="https://faust90.itch.io/octo-chase" target="_blank"
+      >Potete provare il gioco qui.</a
+    >
+    Se invece volete vedere il codice,
+    <a href="https://github.com/FireBellyToad/OctoChase" target="_blank"
+      >lo trovate qui</a
+    >.
+  </p>
+  <figure>
+    <img
+      loading="lazy"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJJ8SojZ1dZ8xynwmpad53lqqqDrBqvM3jnJcS_XgcSEY3jpQwxb0WL0aKYmM0f39EByEqMJ-GlIfzEX3h3l8D7Uq8QYZRLnHSYzlAp7uQoumoRbcbrZP-RL2qRO_JBv3mdxkV6NSyxTSR3iNB4CT2NcZKgxjpCByDC1GdENqGtwVJGvQ1x78qQtR9hgo/s16000/Immagine%202025-04-22%20165446.png"
+    />
+  </figure>
+
+  <section>
+    <h3>Tutto è cominciato da...</h3>
+    <p>
+      ... quando ho trovato questa pagina di un blog per puro caso, spulciando
+      nel mio feed:
+      <a
+        href="https://blog.logrocket.com/building-a-roguelike-game-with-rot-js/"
+        target="_blank"
+        >Building a roguelike game with rot.js</a
+      >. Avendo voglia di fare "palestra" con il Javascript e di ritornare a
+      sviluppare videogiochi dopo un periodo di pausa, mi sono detto: "Perché
+      no?"
+    </p>
+
+    <p>
+      Avendo necessità di partire un passettino alla volta e a non perdermi nel
+      solito progettone con manie di grandezza, decido di aggiungere a quanto
+      spiegato nella pagina di cui sopra alcuni tutorial trovati su
+      <a href="https://roguebasin.com/index.php/Main_Page" target="_blank"
+        >Roguebasin</a
+      ><b>: </b>sito importante come archivio di informazioni per sviluppare un
+      Roguelike
+    </p>
+  </section>
+  <section>
+    <h3>Palestra di Javascript</h3>
+
+    <p>
+      Sebbene io usi spesso Javacript nel mio principale lavoro, mi ritrovo a
+      doverlo fare adeguandomi a convenzioni di progetto che mi "costringono" a
+      concentrarmi <b>su un certo modo </b>di sviluppare. Con questo progetto,
+      però, volevo riprendere in mano tutti i concetti che normalmente non mi
+      capita di usare. <b>Classi ed ereditarietà </b>sono per me il pane
+      quotidiano in Java, molto meno in Javascript.
+    </p>
+    <p>
+      Essendo che il progetto doveva avere come fine quello di allenarsi, ho
+      demandato tutta la parte grafica all'utilizzo di emoji tramite la canvas
+      messa a disposizione da rot.js.
+    </p>
+  </section>
+  <section>
+    <h3>Prime aggiunte</h3>
+    <p>
+      Rispetto al tutorial originale, ho cambiato l'ambientazione spaziale in
+      una marina: sei un polpo (🐙) che deve navigare in un labirinto di roccia
+      (🌑) per mangiare un granchio (🦀). Quando riesci a farlo, un messaggio
+      viene mostrato a schermo.Come prima cosa ho replicato tutto il contenuto
+      del tutorial, con la mia personale code review e utilizzo delle classi.
+    </p>
+    <p>
+      Ho deciso poi di aggiungere
+      <b>la possibilità per il granchio di muoversi </b>sullo schermo, per
+      rendere più caotica la partita. Per farlo, lui seleziona una direzione
+      casuale tra su, giù, destra e sinistra: se la "cella" è libera, si muoverà
+      lì.
+    </p>
+    <p>
+      Infine, <b>ho aggiunto uno squalo</b> (🦈) in grado di
+      <b>inseguire e uccidere il polpo</b>, in modo da creare una condizione di
+      sconfitta. Il pathfinding era già implementato in rot.js e l'ho
+      configurato con una <i>topology </i>di 4: questo vuol dire che lo squalo
+      non si muoverà mai in diagonale, restringendo così la sua possibilità di
+      movimento alle singole direzioni su, giù, destra e sinistra.
+    </p>
+  </section>
+  <section>
+    <h3>Tempo e velocità</h3>
+    <p>
+      Per sfruttare altre funzionalità della liberia, ho deciso che il granchio
+      dovesse essere più lento rispetto al polpo. Ho dunque utilizzato lo
+      Scheduler di ROT.js, una classe che riceve una lista di <i>attori</i> da
+      temporizzare.Assegnando una velocità numerica a ciascun attore, è
+      possibile fare in modo che alcuni attori abbiamo meno azioni di altri. Il
+      granchio ha infatti velocità 1, il polpo e lo squalo hanno una velocità di
+      2.
+    </p>
+    <h3>Il FOV e il futuro</h3>
+    <p>
+      Anche se il giochino è completo,<b>
+        sarà la base di un progetto molto più grande</b
+      >
+      che sul quale sto elucubrando in questi giorni. Ma in termini di
+      aggiornamenti immediati, ho già implementato il <i>field of view</i>, in
+      modo che il polpo non possa vedere sempre tutta la mappa ma piuttosto che
+      la sua visibilità sia influenzata dai muri. In questo modo, la ricerca del
+      granchio e la fuga dallo squalo hanno una tensione molto maggiore, perché
+      il polpo può trovarsi intrappolato in un vicolo cieco che non aveva visto
+      subito!
+    </p>
+  </section>
+</article>

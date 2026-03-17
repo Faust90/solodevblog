@@ -1,8 +1,8 @@
 # Gets last modified html file in "/posts" and treat it as the last post to show in homepage
 
-# go to /post/ and get the last modified file name
+# go to /post/ and get the last modified html file name (excluding drafts)
 cd "./posts" && 
-OUTPUT="$(ls -A -1 -t | head -1)" &&
+OUTPUT="$(ls -A -1 -t -I 'draft*' | grep html | head -1)" &&
 
 # go back and create a "sed" command string to replace LAST_POST_DATE with found filename in javascritpt file
 cd .. && 
