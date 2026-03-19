@@ -1,0 +1,89 @@
+<article>
+  <h5>31/03/2023</h5>
+  <h2>JavaFX è simpatico ma non ci vivrei</h2>
+  <p>
+    In questo post parlerò di un esperimento che ho deciso di portare avanti per
+    <b>LHEngine,</b> il motore di
+    <a href="#" onclick="loadContent('26-9-2022_lhit_postmortem.html')"
+      >Langobardia Horribilis: in Trebia</a
+    >.
+  </p>
+  <section>
+    <h3>Da Hardcode a Softcode</h3>
+    <p>
+      Il mondo di gioco in LH in Trebia è letteralmente un <b>file json</b>che
+      contiene un "Mondo", cioè una mappa di "Stanze". Le Stanze sono quelle in
+      cui il personaggio si muove, e quelle di esse che non sono "fisse" vengono
+      determinate casualmente. In questo modo ogni partita ha un
+      <b>Mondo</b>dove la maggiorparte delle Stanze sarà diversa dalla partita
+      precedente in termini di posizione.
+    </p>
+    <p>
+      L'idea era sviluppare un editor carino con UI per poter modellare in modo
+      coerente questo file di Mondo.
+    </p>
+  </section>
+  <section>
+    <h3>L'arte perduta delle applicazioni desktop</h3>
+    <p>
+      Questa intestazione un po' pretestuosa è in realtà una metafora delle
+      ultime mie esperienze lavorative, che ovviamente valgono quello che
+      valgono in quanto esperienza personale. È che in quasi 10 anni di lavoro
+      ho sviluppato solo una volta per desktop, e peraltro con
+      <a href="https://www.electronjs.org/" target="_blank">Electron.js</a>.
+    </p>
+  </section>
+  <section>
+    <h3>Si, ma era meglio usare Swing?</h3>
+
+    <p>
+      <a href="https://openjfx.io/" target="_blank">JavaFX </a>è il "successore
+      spirituale" di Swing, la (forse) più nota libreria per sviluppo di
+      applicazioni desktop in Java. Nei miei primi esperimenti di sviluppo di
+      giochi in Java lo utilizzai per la Ui e l'editor di livelli di
+      <a href="https://github.com/FireBellyToad/Arkolour" target="_blank"
+        >Arkolour</a
+      >, senza sapere che già allora era disponibile JavaFX.
+    </p>
+    <figure>
+      <img
+        loading="lazy"
+        height="247"
+        src="./posts/imgs/31-3-2023_java_fx.PNG"
+        width="311"
+      />
+      <figcaption>Meglio tardi che mai</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Ziocàn le dipendenze</h3>
+    Chiamatemi pure sciocco, ma l'idea di utilizzare le classi del modulo
+    <b>core</b>dell'LHEngine per popolare i campi dell'editor mi sembrava una
+    cosa intelligente. Ovviamente ho dovuto piangere e piegarmi al dio Gradle
+    per capire come configurare il tutto correttamente. Ho risolto referenziando
+    il <b>core.jar </b>in questo modo
+    <code>implementation '../'</code>
+    <p>
+      Visto che procedendo nello sviluppo ho scoperto di dover leggere e
+      scrivere file .json, e non volendo appoggiarmi alla libreria di LibGDX, ho
+      provato a utilizzare Jackson. Mi sono arreso e me li scrivo io, anche
+      perché mi sono rotto le palle delle dipendenze, dei moduli e delle
+      madonne.
+    </p>
+    <h3>FXML e Annotazioni</h3>
+    Questa è una cosa veramente bella. La UI in JavaFX utilizza un formato di
+    markup chiamato <b>FXML</b>, e può referenziare funzioni Java tramite le
+    Annotazioni. Se si arriva da sviluppo di applicazioni web HTML e Javascript
+    questa parte scorre in modo molto naturale.Per il design della UI ho
+    utilizzato <b>Scene Builder, </b>uno strumento grafico che permette di
+    progettare le Scene tramite drag and drop.
+  </section>
+  <h3>Tutto questo lavoro per...</h3>
+  <p>
+    ... abbandonare il progetto. JavaFX è divertente, ma inutilmente complicato
+    per quello che avevo in mente e, dopo un aggiornamento dell'IDE, di Gradle e
+    della JDK, ha dato ancora problemi e mi sono semplicemente stancato di
+    portarlo avanti. Visto la destinazione a semplice tool di supporto alla
+    LHEngine, lo riscriverò<b> come pagina html con Javascript e Alpine.js.</b>
+  </p>
+</article>

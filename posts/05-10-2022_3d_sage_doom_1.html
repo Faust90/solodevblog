@@ -1,0 +1,234 @@
+<article>
+  <h2>Let's Program Doom di 3DSage, ma in LibGDX: Parte 1</h2>
+  <p>
+    Ci sono quei video che a volte danno il "la" a qualcosa nel tuo cervello.
+    Qualcosa scatta e dici "devo provarci anche io", specie se quel video è un
+    tutorial su qualcosa di inusuale, ad esempio come creare candele di soia o,
+    nel mio caso, programmare
+    <a href="https://www.youtube.com/watch?v=huMO4VQEwPc" target="_blank"
+      >un renderer simile a quello di Doom</a
+    >
+  </p>
+  <figure>
+    <a href="https://youtu.be/huMO4VQEwPc" target="_blank">
+      <img loading="lazy" src="./posts/imgs/05-10-2022_3d_sage_doom_1_1.jpg"
+    /></a>
+
+    <figcaption>Include foto di un bel gattone</figcaption>
+  </figure>
+
+  <p>
+    Il video è fatto da
+    <a href="https://www.youtube.com/c/3DSage" target="_blank">3DSage</a> , un
+    esperto di 3D e programmazione su piattaforme particolari, ma soprattutto ha
+    un bellissimo micione che fa comparsate nei video. Ha inoltre tanta roba
+    interessante sul suo canale, compresa una serie di video per creare un
+    renderer di tipo raycaster (parte
+    <a href="https://www.youtube.com/watch?v=gYRrGTC7GtA">1</a>,
+    <a href="https://www.youtube.com/watch?v=PC1RaETIx3Y">2</a>,
+    <a href="https://www.youtube.com/watch?v=w0Bm4IA-Ii8">3</a>) e
+    <a href="https://www.youtube.com/watch?v=8j0gakEHJuI">4</a>).
+  </p>
+
+  <p>
+    Il video sul renderer stile Doom aveva titillato quella parte di me che
+    vuole far tutto per conto suo, sbattendo la testa e sporcandosi le mani. E
+    mentre fino a poco tempo fa mi ero ripromesso di imparare a a lavorare con
+    <a href="https://www.zdoom.org/index">GZDoom</a>, mi ha fatto venir voglia
+    complicarmi la vita.
+  </p>
+  <section>
+    <h3>Si, ma in pratica?</h3>
+    <p>
+      Per farla molto breve, il vecchio Doom divideva le mappe in "settori".
+      Ogni settore era fondamentalmente un poligono di n lati (praticamente il
+      <b>soffitto </b>o il <b>pavimento</b>). Dai lati venivano estrusi dei
+      rettangoli sempre perpendicolari al settore che rappresentavano
+      <b>i muri</b>. Tanti settori consecutivi costruivano una o più "stanze"
+      nel quale il personaggio si muove. Questa spiegazione è estremamente
+      semplicistica, per questo consiglio, se siete davvero interessati, di
+      approfondire in uno degli innumerevoli siti o video che ne spiegano il
+      funzionamento.
+    </p>
+  </section>
+  <section>
+    <h3>Java vs C</h3>
+    <p>
+      Visto che la situazione di partenza non era abbastanza complicata, ho
+      deciso di riscrivere tutto in Java, usando
+      <a href="https://libgdx.com/">LibGDX </a>che conoscevo bene. Che come idea
+      fa già ridere: nel video il progetto è sviluppato in C e Opengl. Per chi
+      sa di cosa sto parlando, basti sapere che LibGDX utilizza come backend una
+      versione Java di Opengl, mascherando molta della logica di "basso
+      livello". Per chi non sa di cosa sto parlando è invece inutile che glielo
+      spieghi.
+    </p>
+
+    <figure>
+      <img loading="lazy" src="./posts/imgs/05-10-2022_3d_sage_doom_1_2.png" />
+    </figure>
+    <figure>
+      <img loading="lazy" src="./posts/imgs/05-10-2022_3d_sage_doom_1_3.png" />
+      <figcaption>Uguale uguale...</figcaption>
+    </figure>
+
+    <p>
+      il buon 3DSage ha anche quello che io reputo un brutto vizio: usare nomi
+      delle variabili molto corti. Sarò prolisso, ma quando scrivo codice ho
+      bisogno che tutto mi sia immediatamente chiaro. Inoltre, mi sono preso la
+      libertà di rendere il codice più vicino alle normali convenzioni di Java e
+      di programmazione ad oggetti, non facendo così una semplice traduzione 1:1
+      del codice.
+    </p>
+  </section>
+  <section>
+    <h3>Le coordinate float, mannaggia a loro</h3>
+    <p>
+      Una delle cose delle quali non avevo immediatamente tenuto conto è il
+      fatto che nel video lui usi quasi sempre variabili <i>int</i> per le
+      coordinate del rendering. LibGDX invece utilizza variabili <i>float</i>.
+      Questo, unito al fatto che le formule con <i>sin</i> e <i>cos </i>danno
+      spesso risultati non interi, causavano problemi grafici piuttosto
+      evidenti.
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="410"
+        width="511"
+        src="./posts/imgs/05-10-2022_3d_sage_doom_1_4.png"
+      />
+      <figcaption>Quelle cose proprio belle da vedere.</figcaption>
+    </figure>
+
+    <p>
+      Castare i <i>float </i>ad <i>int </i>non portava a risultati
+      soddisfacenti, perché causava altri tipi di artefatti o errori. Dopo ore a
+      capire come poter sistemare il problema, ho dovuto utilizzare il metodo
+      più ignorante, che però si è rivelato vincente:
+      <b>arrotondare tutti i risultati dei calcoli e delle coordinate.</b>
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="424"
+        width="528"
+        src="./posts/imgs/05-10-2022_3d_sage_doom_1_5.png"
+      />
+      <figcaption>Un pochino meglio.</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Dal 2.5D al 3D</h3>
+    <p>
+      Finisco finalmente il progetto per come è indicato nel video. Vuoi
+      aspettare la seconda parte prima di continuare, in modo da poter fare
+      altro? Ovvio che no.
+    </p>
+    <p>
+      Ora, è noto a tutti che la Doom Engine non è letteralmente in 3D. Ci sono
+      decine di discussioni portate avanti da centinaia di utenti su decine di
+      forum e siti. Non voglio addentrarmi nel ginepraio, quindi mi limito a
+      dire che il renderer che stiamo sviluppando è, di fatto, un
+      <b>2.5D </b>(giusto per confondere ancora di più le idee).
+    </p>
+    <p>
+      Ho quindi deciso di sviluppare parallelamente un vero renderer 3D: lo
+      scopo è ottenere una classe Java che, predendo
+      <b>gli stessi dati della mappa da renderizzare</b> di quello preso a
+      modello dal video (chiamiamolo <b>DoomLikeRenderer</b>) , ottenga un vero
+      modello 3D e lo renderizzi a dovere (chiamiamolo <b>True3dRenderer</b>).
+      LibGDX mette a disposizione degli strumenti per costruire e renderizzare
+      modelli 3D, quindi parto parzialmente avvantaggiato. O forse no, visto che
+      è la prima volta che lavoro in ambiente 3D senza l'ausilio di engine come
+      Unity o Godot.
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="415"
+        width="515"
+        src="./posts/imgs/05-10-2022_3d_sage_doom_1_6.png"
+      />
+      <figcaption>Da questo l'idea era ottenere...</figcaption>
+    </figure>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="415"
+        width="515"
+        src="./posts/imgs/05-10-2022_3d_sage_doom_1_7.png"
+      />
+      <figcaption>
+        ... questo. L'illuminazione e la risoluzione non sono l'unica cosa
+        diversa.
+      </figcaption>
+    </figure>
+
+    <p>
+      In realtà è stato meno difficile del previsto. Il <b>True3dRenderer </b>si
+      prende tutti i dati in pancia e genera un modello parte per parte (tramite
+      <b>MeshPartBuilder</b>). Le superfici sono generate raccogliendo tutti i
+      vertici del poligono, e poi triangolate tramite
+      <i>triangolazione earclipping. </i>Per farla breve: son riuscito ad
+      implementare lo stesso identico funzionamento del
+      <b>DoomLikeRender</b> anche con un vero rendering 3D.
+    </p>
+  </section>
+  <section>
+    <h3>Eh (looking) Up & Down</h3>
+
+    <p>
+      Non tutto però è stato facile. Uno dei problemi nati dalla mia ignoranza e
+      incompetenza matematica (avevo la media del 6 scarso alle superiori) è
+      stato quello su come implementare la possibilità di "guardare verso l'alto
+      o il basso". Inizialmente pensavo di ruotare lungo l'asse X, ma ovviamente
+      non era applicabile se la camera aveva già cambiato angolazione. La
+      soluzione, come al solito, richiedeva di ragionarci partendo dalle cose
+      più semplici, ovvero la
+      <a href="https://it.wikipedia.org/wiki/Regola_della_mano_destra"
+        >regola della mano destra</a
+      >
+    </p>
+
+    <figure>
+      <img
+        loading="lazy"
+        height="415"
+        width="515"
+        src="./posts/imgs/05-10-2022_3d_sage_doom_1_8.png"
+      />
+      <figcaption>Mezzi potentissimi.</figcaption>
+    </figure>
+
+    <p>
+      In modo totalmente empirico e deduttivo, andando a tentoni, sono riuscito
+      ad ottenere un corretto rendering e movimento di camera
+      <b>ruotando sull'asse X di 90 gradi </b> e
+      <b
+        >ruotando lungo il vettore perpendicolare (con z = 0) alla normale della
+        direzione della telecamera.</b
+      >
+      Ovviamente ho ancora dei dubbi sul perché non abbia funzionato senza
+      questi accorgimenti, e troverò delle risposte solo sbattendoci la testa
+      nelle prossime volte. Per ora mi godo il mio risultato.
+    </p>
+
+    <p>
+      Per chi volesse darsi una lettura all'attuale codice, trova il repo
+      <a href="https://github.com/FireBellyToad/DoomLike">qua</a>.
+    </p>
+
+    <p><b>EDIT 26/08/22: </b>Ecco il video del renderer in funzione</p>
+
+    <figure>
+      <a href="https://youtu.be/UztoY4eQAPA" target="_blank">
+        <img loading="lazy" src="./posts/imgs/05-10-2022_3d_sage_doom_1_9.jpg"
+      /></a>
+    </figure>
+  </section>
+</article>
