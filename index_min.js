@@ -1,1 +1,1 @@
-async function loadContent(t,n=!0){n=await(await fetch(n?"./posts/"+t:"./"+t)).text();document.getElementById("mainContent").innerHTML=n}async function loadLatest(){loadContent("5-10-2022_3d_sage_doom_1.html")}
+async function loadUrl(t){t=await(await fetch(t)).text();document.getElementById("mainContent").innerHTML=t}async function loadLatest(){loadUrl("posts/2-9-2025_rust_roguelike_1.html")}window.addEventListener("popstate",t=>{t.target.location.hash?loadUrl(t.target.location.hash.slice(1)):loadLatest()});
