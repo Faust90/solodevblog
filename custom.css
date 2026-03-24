@@ -11,3 +11,23 @@
   --preformatted: #ccc;
   --disabled: #111;
 }
+
+/* Social and contacts icons */
+.ph img:hover {
+  background-color: #486399;
+}
+a:link.ph {
+  text-decoration: none;
+}
+
+a:visitedph {
+  text-decoration: none;
+}
+
+a:hoverph {
+  text-decoration: none;
+}
+
+a:activeph {
+  text-decoration: none;
+}
