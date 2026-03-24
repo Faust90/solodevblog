@@ -19,15 +19,12 @@
 a:link.ph {
   text-decoration: none;
 }
-
-a:visitedph {
+a.ph:visited {
   text-decoration: none;
 }
-
-a:hoverph {
+a.ph:hover {
   text-decoration: none;
 }
-
-a:activeph {
+a.ph:active. {
   text-decoration: none;
 }
