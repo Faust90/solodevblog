@@ -1,101 +1,139 @@
 <article>
   <h5>26/09/2024</h5>
   <h2>World's Viscera - Roguelike in Rust - parte 2</h2>
-<p>
-  Se avete letto i post <a
-    href="#" on
-    >Polpi e rot.js</a
-  > e
-  <a
-    href="https://diariosolodev.blogspot.com/2025/07/rust-bracket-lib-e-macroquad-polpi-e.html"
-    rel="nofollow"
-    target="_blank"
-    >Roguelike in Rust</a
-  >, sapete già di cosa sto parlando. Altrimenti: questo post vuole essere un
-  mezzo diario di sviluppo e design di World's Viscera, il roguelike che mi sto
-  dilettando a fare nel tempo libero.
-</p> 
+  <p>
+    Se avete letto i post
+    <a href="#posts/22-4-2025_polpi_rotjs.html">Polpi e rot.js</a> e
+    <a href="#posts/2-9-2025_rust_roguelike_1.html">Roguelike in Rust</a>,
+    sapete già di cosa sto parlando. Altrimenti: questo post vuole essere un
+    mezzo diario di sviluppo e design di World's Viscera, il roguelike che mi
+    sto dilettando a fare nel tempo libero.
+  </p>
 
-<p>
-  <b>In breve: </b>ho fatto un sacco di cose nuove e carine con World's
-  Viscera.<br />
-   
+  <p>
+    <b>In breve: </b>ho fatto un sacco di cose nuove e carine con World's
+    Viscera.
+  </p>
+
   <figure>
     <img
       height="463"
       src="https://blogger.googleusercontent.com/img/a/AVvXsEjCrSGE9oOvN2xv7q0VjeD-COl7Kbz7I9mS6uhwZ1L03BTqTzuflxO6jfskU2Nas_bNo_agFU8QaKWPiSRgHd6s2SlQMTTIsq_md59XexBZKi8vrUHfndCAmmPZwGTdqME_YmjtnBTKIxOlWTPeCNdEDWSpdeM8mjfgNH9-ebl1lMt1vAZeWbq5i-gAWVw=w640-h463"
       width="640"
     />
-  </p>
-  <figcaption>Va che bravo, ho fatto anche un schermo del titolo</figcaption></figure>
-  
-  <h3>Limitarsi per crescere </h3>
-  <p>Un po' per sondare il cane spurcelobe . </p>
-  <p>
-    Mi son volutamente limitato a grafica 2D senza animazioni e con molti
-    feedback di natura testuale per non dover perdere tempo con quegli aspetti.
-    Il focus era concentrarmi sull'apprendimento delle regole di Rust e
-    sull'esplorare i possibili gameplay.
-  </p>
-  <h3>Gioco sistemico ed ECS</h3>
-  <p>
-    Premessa: ho scritto
-    <a
-      href="https://diariosolodev.blogspot.com/2025/07/rust-bracket-lib-e-macroquad-polpi-e.html#:~:text=versione%20di%20Macroquad.-,ECS,-By%20Guypeter4%20%2D%20Own"
-      rel="nofollow"
-      target="_blank"
-      >una piccola introduzione all'ECS qua</a
-    >, non starò a ripetermi.
-  </p>
-  <p>L'ECS mi ha permesso di realizzare un
+    <figcaption>Va che bravo, ho fatto anche un schermo del titolo</figcaption>
+  </figure>
+
+  <section>
+    <h3>Limitarsi per crescere</h3>
+    <p>
+      Mi son volutamente limitato a grafica 2D senza animazioni e con molti
+      feedback di natura testuale per non dover perdere tempo con quegli
+      aspetti. Il focus era concentrarmi sull'apprendimento delle regole di Rust
+      e sull'esplorare i possibili gameplay.
+    </p>
+    <p>
+      Ho anche scelto un stile grafico a pochi colori e sopratutto a bassa
+      risoluzione. Questo poi mi ha naturalmente portato ad utilizzare
+      <b
+        >i pochi colori in modo che abbiamo un significato reale nell'ambito del
+        gameplay</b
+      >:
+    </p>
+    <ul>
+      <li><b>Giallo:</b> Tutto ciò che infligge malattia</li>
+      <li><b>Verde:</b> Tutto ciò che è acido corrosivo</li>
+      <li><b>Viola:</b> Tutto ciò che è velenoso</li>
+      <li><b>Azzurro:</b> Tutto ciò che è radiattivo</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Gioco sistemico ed ECS</h3>
+    <p>
+      Premessa: ho scritto
+      <a
+        href="https://diariosolodev.blogspot.com/2025/07/rust-bracket-lib-e-macroquad-polpi-e.html#:~:text=versione%20di%20Macroquad.-,ECS,-By%20Guypeter4%20%2D%20Own"
+        rel="nofollow"
+        target="_blank"
+        >una piccola introduzione all'ECS qua</a
+      >, non starò a ripetermi.
+    </p>
+    <p>
+      L'ECS mi ha permesso di realizzare un
       <i>gameplay sistemico: </i>l'elaborazione di componenti attraverso i
       diversi sistemi generano poi interazioni imprevedibili e caotiche nel
       mondo di gioco. Cosa vuol dire? Che ci sono Mostri preda che fuggiranno,
       Mostri intelligenti in grado di usare proiettili e oggetti magici anche
       contro altri loro simili. Mostri che uccidono e mangiano altri mostri, o
       semplicemente interagiscono con oggetti. Il mondo così diventa vivo ed
-      interessante anche se il giocatore sceglie di rimanere uno
-      spettatore. 
-  </p>
-  <p>
-    L'ECS, per sua natura, rende poi quasi completamente
-    <i>gratis</i> l'aggiunta di nuove entità con componenti già
-    implementati. Il rischio è che combinazioni di componenti non testate in
-    precedenza possano generare delle situazioni non volute... un divertente
-    esempio di questi casi si è riscontrato in
-    <i>Dwarf Fortress,</i> un roguelike
-    <a
-      href="https://dwarffortressbugtracker.com/view.php?id=9195"
-      rel="nofollow"
-      target="_blank"
-      >dove i gatti potevano ubriacarsi a morte per via di un bug</a
-    > .
-  </p>
-  <h3>Tempistica e particelle</h3>
-   
-  <p>
-      Difficoltà a temporizzare gli unici effetti "animati" di particelle    
-  </p>
-  <h3>I funghi e i loro mercanti</h3>
-      
-  <p>
-    Baratto con i mercanti di funghi. Prima con barriere fisiche, poi
+      interessante anche se il giocatore sceglie di rimanere uno spettatore.
+    </p>
+    <p>
+      L'ECS, per sua natura, rende poi quasi completamente
+      <i>gratis</i> l'aggiunta di nuove entità con componenti già implementati.
+      Il rischio è che combinazioni di componenti non testate in precedenza
+      possano generare delle situazioni non volute... un divertente esempio di
+      questi casi si è riscontrato in <i>Dwarf Fortress,</i> un roguelike
+      <a
+        href="https://dwarffortressbugtracker.com/view.php?id=9195"
+        rel="nofollow"
+        target="_blank"
+        >dove i gatti potevano ubriacarsi a morte per via di un bug</a
+      >
+      .
+    </p>
+  </section>
+  <section>
+    <h3>Tempistica e particelle</h3>
+
+    <p>Difficoltà a temporizzare gli unici effetti "animati" di particelle</p>
+  </section>
+  <section>
+    <h3>I funghi e i loro mercanti</h3>
+
+    <p>
+      Baratto con i mercanti di funghi. Prima con barriere fisiche, poi
       possibilità di rubare funghi per via di un bug.
-  </p>
-   
-  <h3>Linux Mint, Cinnamon e lo scaling delle finestre</h3>
-   
-  <p>
-    Macroquad renderizzava la finestra a metà quando lo zoom di sistema era
-      impostato a 200%. 
-  </p>
-  <h3>Tool di debug</h3>
-   
-  <p>    
+    </p>
+  </section>
+  <section>
+    <h3>Linux Mint, Cinnamon e lo scaling delle finestre</h3>
+    <p>
+      Durante lo sviluppo mi sono ritrovato a dover cambiare computer a causa
+      dei danni causati al mio vecchio PC da un temporale particolarmente
+      violento. Visto che comunque stavo valutando già da tempo il cambio, ho
+      scelto di passare definitivamente a Linux, scegliendo la distro
+      <a href="https://www.linuxmint.com/">Linux Mint 22.2</a>.
+    </p>
+
+    <p>
+      Questo però ha portato ad alcuni problemi dovuti al Desktop Environment
+      (Cinnamon) di Mint, lo zoom frazionario del monitor e come Macroquad
+      renderizzava la finestra: quando non era impostato al normale 100%,
+      <b>la finestra tagliava il contenuto a metà</b>.
+    </p>
+
+    <figure>
+      <img
+        height="463"
+        src="https://blogger.googleusercontent.com/img/a/AVvXsEjCrSGE9oOvN2xv7q0VjeD-COl7Kbz7I9mS6uhwZ1L03BTqTzuflxO6jfskU2Nas_bNo_agFU8QaKWPiSRgHd6s2SlQMTTIsq_md59XexBZKi8vrUHfndCAmmPZwGTdqME_YmjtnBTKIxOlWTPeCNdEDWSpdeM8mjfgNH9-ebl1lMt1vAZeWbq5i-gAWVw=w640-h463"
+        width="640"
+      />
+      <figcaption>Va che roba...</figcaption>
+    </figure>
+    <p>
+      Non ho trovato un modo per risolverlo lato codice, ma ho semplicemente
+      dovuto settato lo zoom di Cinnamon dalla modalità "riduci contenuto" a
+      "ingrandisci contenuto".
+    </p>
+  </section>
+  <section>
+    <h3>Tool di debug</h3>
+
+    <p>
       Finalmente ho tirato fuori la paglia dal culo e ho deciso di integrare un
       piccolo sistema di debug per renderizzare dettagli tecnici (tile
-      bloccanti) e aggiungere nel mondo di gioco entità al momento del
-      bisogno.
-  </p>
-  
+      bloccanti) e aggiungere nel mondo di gioco entità al momento del bisogno.
+    </p>
+  </section>
 </article>

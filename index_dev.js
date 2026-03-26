@@ -13,8 +13,15 @@ async function loadUrl(url) {
 /**
  * Show last post on main content, or introduzione.html instead
  */
-async function loadLatest() {
-    loadUrl('posts/LAST_POST_DATE');
+async function loadLatest() {// Get the current URL
+
+    const url = new URL(window.location.href);
+    // load latest if no page is in url
+    if (!url.hash) {
+        loadUrl('posts/LAST_POST_DATE');
+    } else {
+        loadUrl(url.hash.slice(1))
+    }
 }
 
 /**
