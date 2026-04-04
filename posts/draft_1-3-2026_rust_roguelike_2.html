@@ -34,17 +34,21 @@
     </p>
     <p>
       Ho anche scelto un stile grafico a pochi colori e sopratutto a bassa
-      risoluzione. Questo poi mi ha naturalmente portato ad utilizzare
+      risoluzione. Questo poi mi ha naturalmente portato a utilizzare
       <b
         >i pochi colori in modo che abbiamo un significato reale nell'ambito del
         gameplay</b
       >:
     </p>
     <ul>
-      <li><b>Giallo:</b> Tutto ciò che infligge malattia</li>
-      <li><b>Verde:</b> Tutto ciò che è acido corrosivo</li>
+      <li><b>Marrone:</b> Tutto ciò che è commestibile</li>
+      <li>
+        <b>Giallo:</b> Tutto ciò che è infetto <output></output> infligge
+        malattie
+      </li>
+      <li><b>Verde:</b> Tutto ciò che è acido o corrosivo</li>
       <li><b>Viola:</b> Tutto ciò che è velenoso</li>
-      <li><b>Azzurro:</b> Tutto ciò che è radiattivo</li>
+      <li><b>Azzurro:</b> Tutto ciò che è radioattivo</li>
     </ul>
   </section>
   <section>
@@ -86,7 +90,32 @@
   <section>
     <h3>Tempistica e particelle</h3>
 
-    <p>Difficoltà a temporizzare gli unici effetti "animati" di particelle</p>
+    <p>
+      Una cosa che ci tenevo a implementare era un basilare sistema di particles
+      animati come quelli di Nethack. In quel gioco, quando un giocatore o un
+      mostro usano una bacchetto o lanciano certi incantesimi, il raggio o
+      l'esplosione vengono mostrati con una breve animazione. Qui però si è
+      rivelata la difficoltà a temporizzare le animazioni in un contesto di
+      gioco "a turni": normalmente World's Viscera attende un input da tastiera
+      da parte del giocatore per "sbloccare" il gioco e muovere tutti i mostri e
+      le entità fino al successivo turno del giocatore.
+    </p>
+    <p>
+      L'idea di base è che, quando un particle è richiesto dalle meccaniche di
+      gioco (ad esempio, il giocatore ha usato una bacchetta del fulmine),
+      <b>si genere un'area di effetto</b> in cui
+      <b>tutte l'entità contenute subiranno gli effetti meccanici.</b>
+      Successivamente, viene creata l'animazione del fulmine che parte dal punto
+      di partenza e arriva nel tile selezionato come fine dell'area di effetto:
+      <b>per ogni tile dell'area di effetto</b> viene generato un
+      <i>frame</i> che
+      <b>contiene uno o più particle che formeranno l'animazione</b>
+    </p>
+
+    <figure>
+      INSERIRE GIF QUA
+      <figcaption>Esempio di animazione</figcaption>
+    </figure>
   </section>
   <section>
     <h3>I funghi e i loro mercanti</h3>
@@ -129,11 +158,16 @@
   </section>
   <section>
     <h3>Tool di debug</h3>
-
     <p>
       Finalmente ho tirato fuori la paglia dal culo e ho deciso di integrare un
       piccolo sistema di debug per renderizzare dettagli tecnici (tile
       bloccanti) e aggiungere nel mondo di gioco entità al momento del bisogno.
     </p>
   </section>
+  <h3>Altre cose ancora in arrivo</h3>
+  <p>
+    Il progetto è ancora in fase di sviluppo e design, vittima delle mie
+    necessità di espressione personale improvvisate ed estemporanee. Rimanete
+    quindi sintonizzati su prossimi articoli di questo blog
+  </p>
 </article>

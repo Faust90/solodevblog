@@ -4,9 +4,15 @@
  * @param {*} url 
  */
 async function loadUrl(url) {
-    const page = await fetch(url);
-    const pageText = await page.text();
-    document.getElementById('mainContent').innerHTML = pageText;
+    try {
+        const page = await fetch(url);
+        if (page.status !== 200)
+            throw new Error()
+        const pageText = await page.text();
+        document.getElementById('mainContent').innerHTML = pageText;
+    } catch (_) {
+        loadUrl("not_found.html")
+    }
 
 }
 
