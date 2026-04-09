@@ -16,9 +16,9 @@
   </p>
 
   <figure>
-    <img
+    <img loading="lazy"
       height="463"
-      src="https://blogger.googleusercontent.com/img/a/AVvXsEjCrSGE9oOvN2xv7q0VjeD-COl7Kbz7I9mS6uhwZ1L03BTqTzuflxO6jfskU2Nas_bNo_agFU8QaKWPiSRgHd6s2SlQMTTIsq_md59XexBZKi8vrUHfndCAmmPZwGTdqME_YmjtnBTKIxOlWTPeCNdEDWSpdeM8mjfgNH9-ebl1lMt1vAZeWbq5i-gAWVw=w640-h463"
+      src="./posts/imgs/1-3-2026_rust_roguelike_2_1.png"
       width="640"
     />
     <figcaption>Va che bravo, ho fatto anche un schermo del titolo</figcaption>
@@ -41,6 +41,7 @@
       >:
     </p>
     <ul>
+      <li><b>Rosso:</b> Generico elemento d'attenzione</li>
       <li><b>Marrone:</b> Tutto ciò che è commestibile</li>
       <li>
         <b>Giallo:</b> Tutto ciò che è infetto <output></output> infligge
@@ -50,6 +51,14 @@
       <li><b>Viola:</b> Tutto ciò che è velenoso</li>
       <li><b>Azzurro:</b> Tutto ciò che è radioattivo</li>
     </ul>
+
+  <figure>
+    <img loading="lazy" 
+      src="./posts/imgs/1-3-2026_rust_roguelike_2_2.png"
+    />
+    <figcaption>Esempio: i due Calcificatori infliggono l'omonima malattia, e per questo hanno le braccia gialle.
+       Il fungo velenoso invece è viola. In rosso invece gli odori percepibili dalle zone buie.</figcaption>
+  </figure>
   </section>
   <section>
     <h3>Gioco sistemico ed ECS</h3>
@@ -90,6 +99,13 @@
   <section>
     <h3>Tempistica e particelle</h3>
 
+  <figure>
+    <img loading="lazy" 
+      src="./posts/imgs/1-3-2026_rust_roguelike_2_3.png"
+    />
+    <figcaption>Esempio: il giocatore usa una bacchetta del fulmine. Qui si vede anche la modalità di debug di cui parlerò più avanti.</figcaption>
+  </figure>
+
     <p>
       Una cosa che ci tenevo a implementare era un basilare sistema di particles
       animati come quelli di Nethack. In quel gioco, quando un giocatore o un
@@ -112,10 +128,6 @@
       <b>contiene uno o più particle che formeranno l'animazione</b>
     </p>
 
-    <figure>
-      INSERIRE GIF QUA
-      <figcaption>Esempio di animazione</figcaption>
-    </figure>
   </section>
   <section>
     <h3>I funghi e i loro mercanti</h3>
@@ -142,14 +154,12 @@
       <b>la finestra tagliava il contenuto a metà</b>.
     </p>
 
-    <figure>
-      <img
-        height="463"
-        src="https://blogger.googleusercontent.com/img/a/AVvXsEjCrSGE9oOvN2xv7q0VjeD-COl7Kbz7I9mS6uhwZ1L03BTqTzuflxO6jfskU2Nas_bNo_agFU8QaKWPiSRgHd6s2SlQMTTIsq_md59XexBZKi8vrUHfndCAmmPZwGTdqME_YmjtnBTKIxOlWTPeCNdEDWSpdeM8mjfgNH9-ebl1lMt1vAZeWbq5i-gAWVw=w640-h463"
-        width="640"
-      />
-      <figcaption>Va che roba...</figcaption>
-    </figure>
+
+  <figure>
+    <img loading="lazy" 
+      src="./posts/imgs/1-3-2026_rust_roguelike_2_4.png"
+    />
+  </figure>
     <p>
       Non ho trovato un modo per risolverlo lato codice, ma ho semplicemente
       dovuto settato lo zoom di Cinnamon dalla modalità "riduci contenuto" a
@@ -160,14 +170,21 @@
     <h3>Tool di debug</h3>
     <p>
       Finalmente ho tirato fuori la paglia dal culo e ho deciso di integrare un
-      piccolo sistema di debug per renderizzare dettagli tecnici (tile
-      bloccanti) e aggiungere nel mondo di gioco entità al momento del bisogno.
-    </p>
+      piccolo sistema di debug per:</p>
+      <ul>
+        <li>visualizzare i tile bloccanti</li>
+        <li>aggiungere nel mondo di gioco entità al momento del bisogno</li>
+        <li>visualizzare le aree di vista dei png</li>
+        <li>passare all'area successiva</li>
+        <li>infliggere malattie al giocatore per studiarne l'evoluzione</li>
+      </ul>
+      <p>Questo sviluppo mi ha permesso di testare e iterare più rapidamente le meccaniche di gioco,
+         trovando più facilmente bug durante il flusso di gioco e senza utilizzare il classico debugger con punti d'interruzione.</p>
   </section>
   <h3>Altre cose ancora in arrivo</h3>
   <p>
     Il progetto è ancora in fase di sviluppo e design, vittima delle mie
-    necessità di espressione personale improvvisate ed estemporanee. Rimanete
-    quindi sintonizzati su prossimi articoli di questo blog
+    necessità di espressione personale improvvisate ed estemporanee. 
+    Aspettate quindi i prossimi articoli di questo blog.
   </p>
 </article>
