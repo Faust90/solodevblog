@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Gets last modified html file in "/posts" and treat it as the last post to show in homepage
 
 # go to /post/ and get the last modified html file name (excluding drafts)

@@ -1,0 +1,87 @@
+<article>
+  <h5>20/04/2026</h5>
+  <h2>Un nuovo diario di uno sviluppatore in solitaria</h2>
+  <p>
+    <b>In breve: </b> come sfida verso me stesso, ho abbandonato blogger e ho migrato tutti i precedenti articoli su questo nuovo sito, che
+    è sviluppato in un ottica minimalista.
+  </p>
+
+  <section>
+    <h3>Un cambio di vedute</h3>
+    <p>
+      Un giorno mi son reso conto che il mondo della programmazione è diventato <i>pesante</i>.
+      Framework javascript, framework css, megabyte su megabyte di codice boilerplate per mettere in piedi semplici siti web.
+      E me ne sono reso conto per via della pagina <a href="https://justfuckingusehtml.com/" target="_blank">Just Fucking Use HTML</a>,
+      un sito web dai toni molto poco democratici in cui si fa notare al lettore che, nella maggior parte dei casi, non
+      abbiamo bisogno di utilizzare quello che siamo convinti "serva" dover utilizzare.
+    </p>
+
+    <p>In un certo senso c'è stata un'epifania in me, e mi ha fatto venire un mente un altro sito del 
+      quale avevo letto tempo prima grazie a <a href="https://daily.dev/" target="_blank">Daily.dev</a>,
+      ovvero il <a href="https://512kb.club/" target="_blank">512kb Club</a>, un sito che raccoglie progetti web che non superano i 512kb di peso totale. 
+    </p>
+
+  </section>
+  <section>
+    <h3>E quindi...</h3>
+    <p>
+    ... ho deciso di provare a riscrivere tutto con il minimo indispensabile: HTML 5, Javascript <i>vanilla</i> e CSS.  
+    </p>
+
+    <p>Come prima cosa, ho deciso di usare come hosting lo stesso GitHub Pages, in modo da poter gestire facilmente 
+      il versionamento e l'hosting del sito in un unica soluzione. Questo mi ha costretto a rinunciare al Server Side Rendering, ma essendo
+    più abituato a lavorare lato client in ambito Single Page Application, non era un grosso problema.</p>
+
+    <p>Ho quindi esportato il feed di blogger tramite <a href="https://takeout.google.com/" target="_blank">l'apposito strumento Google Takeout</a>. 
+      Dopodiché ho estratto manualmente dal file di backup così ottenuto i vari file html dei post, usando solo i tag basilari di HTML5.
+      Inoltre ho creato un singolo script Javascript il cui compito è di gestire la navigazione tra le pagine.</p>
+
+    <figure>
+      <img loading="lazy" src="/posts/imgs/20-4-2026_solodev_1.PNG"  />
+      <figcaption>Il file javascript in questione alla data odierna. Notare il "LAST_POST_DATE", che spiegherò dopo.</figcaption>
+
+      <p>Ultimo ma non ultimo, ho preferito usare un CSS minimale e leggero chiamato <a href="https://simplecss.org/" target="_blank">simple.css</a>
+         con lievi personalizzazioni.
+      </p>
+  </section> 
+  <section>
+    <h3>Ottimizzare le immagini</h3>
+    <p>I criteri stringenti del 512KB club richiedono ovviamente di dare un'ottimizzazione delle dimensioni delle immagini. 
+      Avendone diverse sugli articoli precedenti, tra cui anche vere e proprie GIF animate, ho correre ai ripari, visto che già una singola immagine
+      occupava oltre 1 mega!. Seguendo i consigli delle FAQ del 512kb Club ho ottimizzato tutte le immagini png e jpg con <a href="https://shortpixel.com/">ShortPixel</a>. 
+    Per quanto riguarda le immagini GIF, invece, ho fatto un lavoro più di fino con <a href="https://ezgif.com/optimize" target="_blank">Ezgif</a>, andando a ridurre i frame, ridurre la tavolozza dei colori,
+  ridurre la superficie dell'immagine e comprimendo il risultato in un formato più <i>lossy</i>.</p>
+
+
+
+    <figure>
+      <img loading="lazy" src="/posts/imgs/20-4-2026_solodev_2.PNG"  />
+      <figcaption>Ezgif e la gif nell'articolo 
+      <a href="#posts/26-9-2022_lhit_postmortem.html"
+        >Langobarda Horribilis: in Trebia Post Mortem</a
+      ></figcaption>
+  </section>
+  <section>
+    <h3>I video YouTube, i cookie e la profilazione</h3>
+    <p>Un'altra <i>rogna</i> che ho dovuto risolvere è stata quella dei video di YouTube, che richiedono l'uso di cookie e profilazione. 
+      Non avendo voglia d'implementare un sistema per chiedere il consenso all'utente e gestire l'eventuale rifiuto, ho scelto d'informarmi sulle 
+      alternative disponibili.</p>
+      <p>Alla fine, il modo più <i>quick & dirty</i> di assicurarmi che non venissero utilizzati cookie e servizi di profilazione è stato quello
+         di sostituire i video embedded con immagini statiche che contenevano il link al contenuto originale. Ho perso un po' d'interattività che 
+        comunque non era mio interesse mantenere, assicurandomi però la totale compliance alle attuali leggi sulla privacy.</p>
+  </section>
+  <section>
+    <h3>BASH! o Shell?</h3>
+    <p>La parte più smanettona di questo processo è sicuramente quello che ho fatto per fare in modo che la home page mostri l'ultimo post pubblicato e il javascript 
+      venga minificato. Dico smanettona perché per farlo, ho dovuto scrivere un piccolo script per il terminale che,
+       ogni volta che viene eseguito, va a leggere i file html dei post, estrae la data di pubblicazione e 
+       aggiorna il file javascript con la data dell'ultimo post pubblicato, sostituendo il valore della variabile "LAST_POST_DATE"
+      prendendo <b>il nome dell'ultimo file modificato</b>. Ho fatto in modo di escludere da questa selezione i file di bozza ("draft_*.html") 
+      in modo da non dovermi preoccupare di aggiornare manualmente la data ogni volta che scrivo un nuovo articolo.
+    In questo periodo sto anche studiando diverse cose che ho sempre dato per scontato nell'informatica, e grazie a queste fonti ho capito l'importanza,
+      in questi script, di rendere esplicito quale terminale sto usando tramite lo shebang #!/bin/sh.
+    </p>
+  </section>
+
+
+</article>
